@@ -39,8 +39,8 @@ namespace Task_1
                     Foreground = new SolidColorBrush(new Color
                     {
                         A = Byte.MaxValue,
-                        R = (byte)(255 - col.Color.R),
-                        G = (byte)(255 - col.Color.G),
+                        //R = (byte)(255 - col.Color.R),
+                        //G = (byte)(255 - col.Color.G),
                         B = (byte)(255 - col.Color.B)
                     }),
                     Margin = new Thickness(2),
