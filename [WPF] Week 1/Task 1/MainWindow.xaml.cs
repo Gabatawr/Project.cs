@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -23,22 +24,27 @@ namespace Task_1
         public MainWindow()
         {
             InitializeComponent();
-
             Random r = new Random();
-            for (int i = 0; i < r.Next(255); i++)
+
+            int brushCount = typeof(Brushes).GetProperties().Length;
+            for (int i = 0; i < brushCount; i++)
             {
-                Color col = new Color()
-                {
-                    A = 255, 
-                    R = (byte)r.Next(255), 
-                    B = (byte)r.Next(255),
-                    G = (byte)r.Next(255)
-                };
+                PropertyInfo brush = typeof(Brushes).GetProperties()[i];
+                SolidColorBrush col = (SolidColorBrush)brush.GetValue(null, null);
+
                 wrapPanel.Children.Add(new TextBlock()
                 {
-                    Text = col.ToString(),
-                    Background = new SolidColorBrush(col),
-                    Margin = new Thickness(2)
+                    Text = brush.Name,
+                    Background = col,
+                    Foreground = new SolidColorBrush(new Color
+                    {
+                        A = Byte.MaxValue,
+                        R = (byte)(255 - col.Color.R),
+                        G = (byte)(255 - col.Color.G),
+                        B = (byte)(255 - col.Color.B)
+                    }),
+                    Margin = new Thickness(2),
+                    Padding = new Thickness(2)
                 });
             }
             
