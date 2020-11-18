@@ -70,7 +70,7 @@ namespace Task_2
                         ReList(ref i, numbers[i] - numbers[i + 1]);
                 }
             }
-            catch (NullReferenceException)
+            catch (DivideByZeroException)
             {
                 Expression.Text = "0";
                 Result.Text = "0";
