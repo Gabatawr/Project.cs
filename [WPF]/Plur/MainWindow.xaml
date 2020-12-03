@@ -1,0 +1,366 @@
+﻿<Window x:Class="Plur.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Plur"
+        xmlns:col="clr-namespace:System.Collections;assembly=mscorlib"
+        mc:Ignorable="d"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        
+        x:Name ="WinMain"
+        Background="#FF323232"
+
+        Height="128" MinHeight="128"
+        Width ="512" MinWidth ="256"
+
+        WindowStyle="None"
+        AllowsTransparency="True"
+        ResizeMode="CanResizeWithGrip"
+
+        MouseLeftButtonDown="WinMainMove_OnMouseLeftButtonDown">
+
+    <Window.Resources>
+
+        <!-- AppIcon -->
+        <Style TargetType="materialDesign:PackIcon">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Height" Value="{Binding ActualHeight, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}"/>
+            <Setter Property="Width" Value="{Binding ActualWidth, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}"/>
+        </Style>
+
+        <!-- AppIconShadow -->
+        <Style x:Key="AppIconShadow" TargetType="materialDesign:PackIcon">
+            <Setter Property="Height" Value="{Binding ActualHeight, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}"/>
+            <Setter Property="Width" Value="{Binding ActualWidth, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}"/>
+        
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="Margin" Value="1.4"/>
+            <Setter Property="Opacity" Value="0.2"/>
+        </Style>
+
+        <!-- AppControl Button -->
+        <Style x:Key="AppControlButton" TargetType="Button">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="{TemplateBinding Background}">
+                            <ContentPresenter/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- AppClose Button -->
+        <Style x:Key="AppCloseButton" TargetType="Button"
+               BasedOn="{StaticResource AppControlButton}">
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="Red"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <!-- AppMin Button -->
+        <Style x:Key="AppMinButton" TargetType="Button"
+               BasedOn="{StaticResource AppControlButton}">
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="Orange"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <!-- AppPlay Button -->
+        <Style x:Key="AppPlayButton" TargetType="Button"
+               BasedOn="{StaticResource AppControlButton}">
+
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background">
+                        <Setter.Value>
+                            <RadialGradientBrush>
+                                <GradientStop Color="BlueViolet" Offset="0.8"/>
+                                <GradientStop Color="Transparent" Offset="0.8"/>
+                            </RadialGradientBrush>
+                        </Setter.Value>
+                    </Setter>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <!-- AppOpenPlaylist Button -->
+        <Style x:Key="AppOpenPlaylist" TargetType="Button"
+               BasedOn="{StaticResource AppControlButton}">
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="Black"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <!-- AppPlaylist Button -->
+        <Style x:Key="AppPlaylistButton" TargetType="Button"
+               BasedOn="{StaticResource AppControlButton}">
+            <Setter Property="Opacity" Value="0.66"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Opacity" Value="1"/>
+                </Trigger>
+                <Trigger Property="IsMouseCaptured" Value="True">
+                    <Setter Property="Opacity" Value="0.33"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <!-- AppTextBlock -->
+        <Style x:Key="AppTextBlock" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="11.8"/>
+        </Style>
+
+    </Window.Resources>
+
+    <Grid>
+        <WrapPanel Height="16" 
+                   HorizontalAlignment="Left" 
+                   VerticalAlignment="Top"
+                   Margin="4,0,0,0">
+
+            <TextBlock x:Name="TxtTitle" 
+                       Style="{StaticResource AppTextBlock}"
+                       FontWeight="Medium">
+                Plur.mp3
+            </TextBlock>
+        </WrapPanel>
+
+        <WrapPanel Width="32" Height="16" 
+                   HorizontalAlignment="Right" VerticalAlignment="Top">
+
+            <Button x:Name="BtnMin"
+                    Width="16" Height="16"
+                    Style="{StaticResource AppMinButton}"
+                    Click="BtnMin_OnClick">
+                <materialDesign:PackIcon Kind="HorizontalLine"
+                                         Margin="0,4,0,0"/>
+            </Button>
+
+            <Button x:Name="BtnClose"
+                    Width="16" Height="16"
+                    Style="{StaticResource AppCloseButton}"
+                    Click="BtnClose_OnClick">
+                <materialDesign:PackIcon Kind="Close"/>
+            </Button>
+
+        </WrapPanel>
+
+        <Grid x:Name="ProgressGrid"
+              Margin="0,16,0,16"
+              Opacity="0.8"
+              MouseDown="UIElement_OnMouseDown">
+            <Grid.Background>
+                <LinearGradientBrush x:Name="ProgressBar" StartPoint="0,1" >
+                    <GradientStop Color="LimeGreen" 
+                                  Offset="0"/>
+                    <GradientStop Color="Transparent" 
+                                  Offset="0"/>
+                </LinearGradientBrush>
+            </Grid.Background>
+        </Grid>
+
+        <Grid Width="220" Height="89">
+
+            <Button x:Name="BtnPrev"
+                    HorizontalAlignment="Left" Width="42" Height="42"
+                    Style="{StaticResource AppControlButton}">
+
+                <Grid>
+                    <materialDesign:PackIcon Kind="SkipPrevious"
+                                             Style="{StaticResource AppIconShadow}"/>
+                    <materialDesign:PackIcon x:Name="IcoPrev"
+                                             Kind="SkipPrevious"/>
+                </Grid>
+            </Button>
+
+            <Button x:Name="BtnPlay"
+                    Width="89" Height="89"
+                    Style="{StaticResource AppPlayButton}"
+                    Click="BtnPlay_OnClick">
+                <Grid>
+                    <materialDesign:PackIcon x:Name="IcoPlayShadow" 
+                                             Kind="PlayCircleOutline"
+                                             Style="{StaticResource AppIconShadow}"/>
+                    <materialDesign:PackIcon x:Name="IcoPlay"
+                                             Kind="PlayCircleOutline"/>
+                </Grid>
+                
+            </Button>
+
+            <Button x:Name="BtnNext"
+                    HorizontalAlignment="Right" Width="42" Height="42"
+                    Style="{StaticResource AppControlButton}">
+                <Grid>
+                    <materialDesign:PackIcon Kind="SkipNext"
+                                             Style="{StaticResource AppIconShadow}"/>
+                    <materialDesign:PackIcon x:Name="IcoNext"
+                                             Kind="SkipNext"/>
+                </Grid>
+            </Button>
+        </Grid>
+
+        
+        <Grid x:Name="GridBottom" 
+              MinHeight="16" Height="16"
+              Margin="0,20,0,0"
+              Background="#FF323232"
+              VerticalAlignment="Bottom">
+            
+            <DockPanel>
+                <Grid DockPanel.Dock="Bottom"
+                      Margin="5,0,0,0">
+                    <WrapPanel Height="16" 
+                               HorizontalAlignment="Left"
+                               VerticalAlignment="Bottom">
+
+                        <TextBlock x:Name="TxtTimeLeft"
+                            Style="{StaticResource AppTextBlock}">
+                            0:00
+                        </TextBlock>
+
+                        <TextBlock Style="{StaticResource AppTextBlock}"
+                                   Margin="2,0,2,0"
+                                   Foreground="#F999">
+                            l
+                        </TextBlock>
+
+                        <TextBlock x:Name="TxtTimeAll"
+                                   Style="{StaticResource AppTextBlock}">
+                            0:00
+                        </TextBlock>
+                    </WrapPanel>
+
+                    <Button x:Name="BtnOpenPlaylist"
+                            VerticalAlignment="Bottom" Width="64" Height="16"
+                            Style="{StaticResource AppOpenPlaylist}"
+                            Click="BtnOpenPlaylist_OnClick">
+
+                        <materialDesign:PackIcon x:Name="IcoOpenPlaylist" 
+                                                 Kind="PlaylistEdit" 
+                                                 Margin="1,1,0,0"/>
+                    </Button>
+
+                    <Grid x:Name="VolumeGrid"
+                          Width="75" Height="8"
+                          HorizontalAlignment="Right"
+                          Margin="0,0,16,0"
+                          MouseDown="ValueGrid_OnMouseDown">
+
+                        <Grid.Background>
+                            <LinearGradientBrush x:Name="VolumeBar" 
+                                                 StartPoint="0,1">
+                                <GradientStop Color="White" 
+                                              Offset="0.2"/>
+                                <GradientStop Color="#F111" 
+                                              Offset="0.2"/>
+                            </LinearGradientBrush>
+                        </Grid.Background>
+
+                        <Grid.Style>
+                            <Style TargetType="Grid">
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="False">
+                                        <Setter Property="Opacity" Value="0.2"/>
+                                    </Trigger>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Opacity" Value="0.8"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Grid.Style>
+                    </Grid>
+                </Grid>
+
+                <Grid x:Name="GridPlaylist"
+                           DockPanel.Dock="Top"
+                           Margin="0,20,0,0">
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+                    <WrapPanel Grid.Column ="0"
+                               Orientation="Vertical"
+                               Width="24" ItemHeight="28"
+                               Margin="4,4">
+
+                        <Button x:Name="BtnAddMusic"
+                                Style="{StaticResource AppPlaylistButton}"
+                                Click="BtnAddMusic_OnClick">
+                            <materialDesign:PackIcon Kind="FileMusic"/>
+                        </Button>
+
+                        <Button x:Name="BtnOpenDirectory"
+                                Style="{StaticResource AppPlaylistButton}">
+                            <materialDesign:PackIcon Kind="FolderMusic"/>
+                        </Button>
+
+                        <Button x:Name="BtnDelMusic"
+                                Style="{StaticResource AppPlaylistButton}">
+                            <materialDesign:PackIcon Kind="FileRemove"/>
+                        </Button>
+
+                    </WrapPanel>
+
+                    <Grid Column="1">
+                        <ListBox x:Name="TablePlayList" SelectionMode="Extended"
+                                 Margin="0,5,0,0">
+                            <ListBox.ItemContainerStyle>
+                                <Style TargetType="ListBoxItem">
+
+                                    <Setter Property="Foreground" Value="White"/>
+                                    <Setter Property="Margin" Value="0,1,0,0"/>
+                                    <Setter Property="Padding" Value="6,1,0,3"/>
+                                    <Setter Property="Opacity" Value="0.33"/>
+                                    <Setter Property="FontSize" Value="16"/>
+                                    <Setter Property="BorderThickness" Value="0"/>
+
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                                                <Border CornerRadius="8,0,0,8"
+                                                        Background="{TemplateBinding Background}"
+                                                        Padding="{TemplateBinding Padding}">
+                                                    <ContentPresenter/>
+                                                </Border>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+
+                                    <Style.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Background" Value="#F444"/>
+                                            <Setter Property="Opacity" Value="0.66"/>
+                                        </Trigger>
+                                        <Trigger Property="IsSelected" Value="True">
+                                            <Setter Property="Background" Value="#F222"/>
+                                            <Setter Property="Opacity" Value="1"/>
+                                        </Trigger>
+                                    </Style.Triggers>
+
+                                </Style>
+                            </ListBox.ItemContainerStyle>
+                        </ListBox>
+                    </Grid>
+
+                </Grid>
+                
+            </DockPanel>
+            
+        </Grid>
+    </Grid>
+</Window>
