@@ -8,6 +8,7 @@
   <ItemGroup>
     <Folder Include="Requests\lesson1\" />
     <Folder Include="Requests\lesson2\" />
+    <Folder Include="Requests\lesson3\" />
   </ItemGroup>
 
 </Project>
