@@ -1,18 +1,18 @@
 ﻿-- Groups ---------------------------------------------------------------------
 CREATE TABLE Groups
 (
-	[ID] INT NOT NULL
+    [ID] INT NOT NULL
          PRIMARY KEY
          IDENTITY(1,1)
 	,
-	[Name] NVARCHAR(10) NOT NULL
+    [Name] NVARCHAR(10) NOT NULL
            UNIQUE
            CHECK ([Name] <> '')
-	,
-	[Rating] INT NOT NULL
+    ,
+    [Rating] INT NOT NULL
              CHECK ([Rating] BETWEEN 0 AND 5)
-	,
-	[Year] INT NOT NULL
+    ,
+    [Year] INT NOT NULL
            CHECK ([Year] BETWEEN 1 AND 5)
 )
 -------------------------------------------------------------------------------
@@ -20,15 +20,15 @@ CREATE TABLE Groups
 -- Departments ----------------------------------------------------------------
 CREATE TABLE Departments
 (
-	[ID] INT NOT NULL
+    [ID] INT NOT NULL
          PRIMARY KEY
          IDENTITY(1,1)
-	,
-	[Financing] MONEY NOT NULL
+    ,
+    [Financing] MONEY NOT NULL
                 DEFAULT 0
                 CHECK ([Financing] !< 0)
-	,
-	[Name] NVARCHAR(100) NOT NULL
+    ,
+    [Name] NVARCHAR(100) NOT NULL
            UNIQUE
            CHECK ([Name] <> '')
 )
@@ -37,11 +37,11 @@ CREATE TABLE Departments
 -- Faculties ------------------------------------------------------------------
 CREATE TABLE Faculties
 (
-	[ID] INT NOT NULL
+    [ID] INT NOT NULL
          PRIMARY KEY
          IDENTITY(1,1)
-	,
-	[Name] NVARCHAR(100) NOT NULL
+    ,
+    [Name] NVARCHAR(100) NOT NULL
            UNIQUE
            CHECK ([Name] <> '')
 )
@@ -50,24 +50,24 @@ CREATE TABLE Faculties
 -- Teachers -------------------------------------------------------------------
 CREATE TABLE Teachers
 (
-	[ID] INT NOT NULL
+    [ID] INT NOT NULL
          PRIMARY KEY
          IDENTITY(1,1)
-	,
-	[EmploymentDate] DATE NOT NULL
+    ,
+    [EmploymentDate] DATE NOT NULL
                      CHECK ([EmploymentDate] !< '1990-01-01')
-	,
-	[Name] NVARCHAR(MAX) NOT NULL
+    ,
+    [Name] NVARCHAR(MAX) NOT NULL
            CHECK ([Name] <> '')
-	,
-	[Premium] MONEY NOT NULL
+    ,
+    [Premium] MONEY NOT NULL
               DEFAULT 0
               CHECK ([Premium] !< 0)
-	,
-	[Salary] MONEY NOT NULL
+    ,
+    [Salary] MONEY NOT NULL
              CHECK ([Salary] > 0)
-	,
-	[Surname] NVARCHAR(MAX) NOT NULL
+    ,
+    [Surname] NVARCHAR(MAX) NOT NULL
               CHECK ([Surname] <> '')
 )
 -------------------------------------------------------------------------------
