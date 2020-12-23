@@ -98,8 +98,7 @@ from (
 -- 7. Вывести минимальное и максимальное количество занятий среди всех кафедр.
 /*
 select
-    min(tmp.[Count Subject]) as [Min],
-    max(tmp.[Count Subject]) as [Max]
+    *
 from (
     select 
         min(_Departments.Name) as [Department Name],
@@ -112,6 +111,40 @@ from (
     group by
         _Departments.Name
 ) as tmp
+where 
+    tmp.[Count Subject] = (
+        select
+            min(tmp.[Count Subject])
+        from (
+            select 
+                min(_Departments.Name) as [Department Name],
+                count(_Lectures.SubjectId) as [Count Subject]
+            from
+                GroupsLectures   _GroupsLectures
+                join Groups      _Groups      on _Groups.Id      = _GroupsLectures.GroupId
+                join Lectures    _Lectures    on _Lectures.Id    = _GroupsLectures.LectureId
+                join Departments _Departments on _Departments.Id = _Groups.DepartmentId
+            group by
+                _Departments.Name
+        ) as tmp
+    )
+    or
+    tmp.[Count Subject] = (
+        select
+            max(tmp.[Count Subject])
+        from (
+            select 
+                min(_Departments.Name) as [Department Name],
+                count(_Lectures.SubjectId) as [Count Subject]
+            from
+                GroupsLectures   _GroupsLectures
+                join Groups      _Groups      on _Groups.Id      = _GroupsLectures.GroupId
+                join Lectures    _Lectures    on _Lectures.Id    = _GroupsLectures.LectureId
+                join Departments _Departments on _Departments.Id = _Groups.DepartmentId
+            group by
+                _Departments.Name
+        ) as tmp
+    )
 */
 -------------------------------------------------------------------------------
 -- 8. Вывести средний фонд финансирования кафедр.
