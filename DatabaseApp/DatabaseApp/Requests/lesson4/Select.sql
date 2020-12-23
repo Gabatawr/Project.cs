@@ -36,5 +36,6 @@ from
     left join Shop_Departments as dep_m on mng.[ID_main_dep] = dep_m.[ID]
     left join Shop_Departments as dep_s on mng.[ID_sec_dep] = dep_s.[ID]
 order by
-    dep_m.[ID]
+    dep_m.[ID], 
+    [Full name]
 --*/ ----------------------------------------------------------------------------

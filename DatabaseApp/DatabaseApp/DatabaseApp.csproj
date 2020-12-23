@@ -10,6 +10,9 @@
     <Folder Include="Requests\lesson2\" />
     <Folder Include="Requests\lesson3\" />
     <Folder Include="Requests\lesson4\" />
+    <Folder Include="Requests\lesson5\" />
+    <Folder Include="Requests\lesson6\" />
+    <Folder Include="Requests\lesson7\" />
   </ItemGroup>
 
 </Project>
