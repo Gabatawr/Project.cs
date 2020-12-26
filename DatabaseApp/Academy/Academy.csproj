@@ -8,6 +8,8 @@
   <ItemGroup>
     <Folder Include="Requests\Homework_2\" />
     <Folder Include="Requests\Homework_3\" />
+    <Folder Include="Requests\Homework_4\" />
+    <Folder Include="Requests\Homework_5\" />
     <Folder Include="Resources\" />
   </ItemGroup>
 
