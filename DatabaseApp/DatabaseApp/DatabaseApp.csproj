@@ -6,6 +6,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Random\Genders.sql~RF5f88f5c0.TMP" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Requests\lesson1\" />
     <Folder Include="Requests\lesson2\" />
     <Folder Include="Requests\lesson3\" />
