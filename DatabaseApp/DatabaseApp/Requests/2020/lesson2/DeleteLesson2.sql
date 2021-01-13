@@ -1,0 +1,1 @@
+﻿DELETE FROM lesson2 WHERE id = 1

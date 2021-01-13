@@ -10,15 +10,17 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Requests\lesson1\" />
-    <Folder Include="Requests\lesson2\" />
-    <Folder Include="Requests\lesson3\" />
-    <Folder Include="Requests\lesson4\" />
-    <Folder Include="Requests\lesson5\" />
-    <Folder Include="Requests\lesson6\" />
-    <Folder Include="Requests\lesson7\" />
-    <Folder Include="Requests\lesson8\" />
-    <Folder Include="Requests\lesson9\" />
+    <Folder Include="Requests\2020\lesson1\" />
+    <Folder Include="Requests\2020\lesson2\" />
+    <Folder Include="Requests\2020\lesson3\" />
+    <Folder Include="Requests\2020\lesson4\" />
+    <Folder Include="Requests\2020\lesson5\" />
+    <Folder Include="Requests\2020\lesson6\" />
+    <Folder Include="Requests\2020\lesson7\" />
+    <Folder Include="Requests\2020\lesson8\" />
+    <Folder Include="Requests\2020\lesson9\" />
+    <Folder Include="Requests\2021\lesson10\" />
+    <Folder Include="Requests\2021\lesson11\" />
   </ItemGroup>
 
 </Project>

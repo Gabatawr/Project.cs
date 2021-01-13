@@ -1,0 +1,2 @@
+﻿-- DML:
+SELECT * FROM numbers

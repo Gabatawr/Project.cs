@@ -5,7 +5,9 @@ VisualStudioVersion = 16.0.30717.126
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DatabaseApp", "DatabaseApp\DatabaseApp.csproj", "{D8A9595A-B1AA-4179-AED7-CBAEB4D18422}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Academy", "Academy\Academy.csproj", "{CBD7E626-1CF2-4F79-A61F-783979A22B14}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Academy", "Academy\Academy.csproj", "{CBD7E626-1CF2-4F79-A61F-783979A22B14}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bookstore", "Bookstore\Bookstore.csproj", "{8C1738FF-4235-47B6-8C67-D46728B86EB5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{CBD7E626-1CF2-4F79-A61F-783979A22B14}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CBD7E626-1CF2-4F79-A61F-783979A22B14}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CBD7E626-1CF2-4F79-A61F-783979A22B14}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8C1738FF-4235-47B6-8C67-D46728B86EB5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8C1738FF-4235-47B6-8C67-D46728B86EB5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8C1738FF-4235-47B6-8C67-D46728B86EB5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8C1738FF-4235-47B6-8C67-D46728B86EB5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
