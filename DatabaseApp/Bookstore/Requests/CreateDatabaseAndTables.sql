@@ -7,6 +7,7 @@ declare @createPath nvarchar(max) = @dbPath + '\Requests\CreateTables.sql'    --
 declare @insertPath nvarchar(max) = @dbPath + '\Requests\InsertTables.sql'    -- InsertFile.sql [UTF-16 only!]
 
 declare @q nvarchar(max)
+
 set @q-------------------------------------------------------------------------
 = 'if db_id(''' + @dbName + ''') is not null'
 +    ' begin'
