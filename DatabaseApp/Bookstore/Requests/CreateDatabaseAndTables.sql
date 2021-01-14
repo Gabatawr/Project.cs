@@ -3,7 +3,8 @@
 declare @dbName nvarchar(max) = 'BookstoreDb'                              -- Database Name
 declare @dbPath nvarchar(max) = 'E:\Code\Project-cs\DatabaseApp\Bookstore' -- Database Path
 
-declare @sqlPath nvarchar(max) = @dbPath + '\Requests\CreateTables.sql'    -- Path file.sql
+declare @createPath nvarchar(max) = @dbPath + '\Requests\CreateTables.sql'    -- CreateFile.sql [UTF-16 only!]
+declare @insertPath nvarchar(max) = @dbPath + '\Requests\InsertTables.sql'    -- InsertFile.sql [UTF-16 only!]
 
 declare @q nvarchar(max)
 set @q-------------------------------------------------------------------------
@@ -28,9 +29,21 @@ set @q-------------------------------------------------------------------------
 + ')'
 exec(@q)-----------------------------------------------------------------------
 
-declare @text nvarchar(max)----------------------------------------------------
-select @q = 'set @textOUT = (select BulkColumn from openrowset(bulk ''' + @sqlPath + ''', single_clob) as text)'
-exec sp_executesql @q, N'@textOUT nvarchar(max) OUTPUT', @textOUT = @text OUTPUT
-
-set @q = quotename(@dbName) + '.sys.sp_executesql'
-exec @q @text------------------------------------------------------------------
+declare @sqlPath nvarchar(max)-------------------------------------------------
+declare @i int = 1
+while @i <= 2
+    begin
+        set @sqlPath = case @i
+            when 1 then @createPath
+            when 2 then @insertPath
+        end
+        ---------------------------------------------------
+        declare @text nvarchar(max)
+        select @q = 'set @textOUT = (select * from openrowset(bulk ''' + @sqlPath + ''', single_nclob) as text)'
+        exec sp_executesql @q, N'@textOUT nvarchar(max) OUTPUT', @textOUT = @text OUTPUT
+        set @q = quotename(@dbName) + '.sys.sp_executesql'
+        exec @q @text
+        -------------
+        set @i += 1
+    end
+-------------------------------------------------------------------------------
