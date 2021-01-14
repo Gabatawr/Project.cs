@@ -8,6 +8,7 @@ declare @insertPath nvarchar(max) = @dbPath + '\Requests\InsertTables.sql'    --
 
 declare @q nvarchar(max)
 
+-- if exist -> drop
 set @q-------------------------------------------------------------------------
 = 'if db_id(''' + @dbName + ''') is not null'
 +    ' begin'
@@ -16,6 +17,7 @@ set @q-------------------------------------------------------------------------
 +    ' end'
 exec(@q)-----------------------------------------------------------------------
 
+-- create
 set @q-------------------------------------------------------------------------
 = 'create database ' + '[' + @dbName + '] '
 + 'on'
@@ -30,6 +32,7 @@ set @q-------------------------------------------------------------------------
 + ')'
 exec(@q)-----------------------------------------------------------------------
 
+-- Create tables and Insert values in file
 declare @sqlPath nvarchar(max)-------------------------------------------------
 declare @i int = 1
 while @i <= 2
@@ -40,10 +43,11 @@ while @i <= 2
         end
         ---------------------------------------------------
         declare @text nvarchar(max)
-        select @q = 'set @textOUT = (select * from openrowset(bulk ''' + @sqlPath + ''', single_nclob) as text)'
-        exec sp_executesql @q, N'@textOUT nvarchar(max) OUTPUT', @textOUT = @text OUTPUT
-        set @q = quotename(@dbName) + '.sys.sp_executesql'
-        exec @q @text
+        select @q = 'set @textOUT = (select * from openrowset(bulk ''' + @sqlPath + ''', single_nclob) as text)' -- extract
+        exec sp_executesql @q, N'@textOUT nvarchar(max) OUTPUT', @textOUT = @text OUTPUT                         -- text query
+
+        set @q = quotename(@dbName) + '.sys.sp_executesql' -- execution of the request 
+        exec @q @text                                      -- in the context of the created database
         -------------
         set @i += 1
     end
