@@ -168,10 +168,9 @@ namespace ADONET_Base
         }
         static T TryExecuteScalar<T>(SqlCommand cmd, string cmdName)
         {
-            T avg = default;
+            T scalar = default;
 
-            try
-            { avg = (T)Convert.ChangeType(cmd.ExecuteScalar(), typeof(T)); }
+            try { scalar = (T)Convert.ChangeType(cmd.ExecuteScalar(), typeof(T)); }
             catch (SqlException ex)
             {
                 Console.Write("SQL: ", ex.Message);
@@ -182,9 +181,9 @@ namespace ADONET_Base
                 Console.Write("NaN: ", ex.Message);
                 throw;
             }
-            Console.WriteLine(cmdName + $": {avg} " + ": OK");
+            Console.WriteLine(cmdName + $": {scalar} " + ": OK");
 
-            return avg;
+            return scalar;
         }
         static void Main()
         {
