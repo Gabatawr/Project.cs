@@ -10,7 +10,7 @@ namespace ADONET_Base
     {
         static void Main()
         {
-            Lesson3.Run();
+            Lesson3.Run2();
         }
     }
 }

@@ -41,8 +41,7 @@ namespace ADONET_Base
             }
             Console.WriteLine(cmdName + ": OK");
         }
-
-        public static T TryExecuteScalar<T>(SqlCommand cmd, string cmdName)
+        public static T TryExecuteScalar<T>(SqlCommand cmd, string cmdName = "")
         {
             T scalar = default;
 
@@ -57,7 +56,8 @@ namespace ADONET_Base
                 Console.Write("NaN: ", ex.Message);
                 throw;
             }
-            Console.WriteLine(cmdName + $": {scalar} " + ": OK");
+            if (string.IsNullOrEmpty(cmdName) is not true)
+                Console.WriteLine(cmdName + $": {scalar} " + ": OK");
 
             return scalar;
         }
