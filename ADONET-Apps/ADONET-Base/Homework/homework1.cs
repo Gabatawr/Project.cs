@@ -5,7 +5,7 @@ namespace ADONET_Base
 {
     class Homework1
     {
-        static void Main()
+        public static void Run()
         {
             #region Сonnect
 

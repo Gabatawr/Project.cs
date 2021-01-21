@@ -21,8 +21,7 @@ namespace ADONET_Base
             SqlConnection connect = new SqlConnection();
             connect.ConnectionString = connectionStringBuilder.ConnectionString;
 
-            try
-            { connect.Open(); }
+            try { connect.Open(); }
             catch (SqlException ex)
             {
                 Console.Write(ex.Message);
@@ -34,8 +33,7 @@ namespace ADONET_Base
         }
         public static void TryExecuteNonQuery(SqlCommand cmd, string cmdName)
         {
-            try
-            { cmd.ExecuteNonQuery(); }
+            try { cmd.ExecuteNonQuery(); }
             catch (SqlException ex)
             {
                 Console.Write(ex.Message);
@@ -48,8 +46,7 @@ namespace ADONET_Base
         {
             T scalar = default;
 
-            try
-            { scalar = (T)Convert.ChangeType(cmd.ExecuteScalar(), typeof(T)); }
+            try { scalar = (T)Convert.ChangeType(cmd.ExecuteScalar(), typeof(T)); }
             catch (SqlException ex)
             {
                 Console.Write("SQL: ", ex.Message);

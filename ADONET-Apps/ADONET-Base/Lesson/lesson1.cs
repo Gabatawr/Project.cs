@@ -7,7 +7,7 @@ namespace ADONET_Base
 {
     class Lesson1
     {
-        static void Main1()
+        public static void Run()
         {
             /*
                 ADO / PDO / JDBC - Технологии доступа к БД

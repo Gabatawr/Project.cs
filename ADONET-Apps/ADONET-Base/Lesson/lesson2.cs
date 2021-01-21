@@ -37,7 +37,7 @@ namespace ADONET_Base
 
             return scalar;
         }
-        static void Main2()
+        public static void Run()
         {
             /*
                 Режимы работы. Присоединенный режим
