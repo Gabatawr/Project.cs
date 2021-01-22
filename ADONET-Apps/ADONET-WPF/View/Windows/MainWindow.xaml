@@ -1,0 +1,51 @@
+﻿<Window x:Class="ADONET_WPF.View.Windows.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" mc:Ignorable="d"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        
+        xmlns:cmd="clr-namespace:ADONET_WPF.Infrastructure.Commands"
+        xmlns:input="clr-namespace:ADONET_WPF.Infrastructure.Commands.Input"
+        xmlns:vm="clr-namespace:ADONET_WPF.ViewModels"
+        
+        WindowStyle="None" AllowsTransparency="True"
+        ResizeMode="CanResizeWithGrip"
+        
+        Height="144" Width="233"
+        Background="#F333"
+        
+        input:MouseCommands.MouseLeftButtonDown="{Binding MoveAppCommand}">
+
+    <!--........................................................................-->
+    <Window.DataContext>
+        <vm:MainWindowViewModel/>
+    </Window.DataContext>
+    <!--........................................................................-->
+    <Window.Resources>
+        
+    </Window.Resources>
+    <!--........................................................................-->
+    
+    <!--........................................................................-->
+    <Grid>
+        <Grid Height="14" Width="30" 
+              VerticalAlignment="Top" HorizontalAlignment="Right"
+              Margin="0,6,6,0">
+
+            <Button ToolTip="Minimize"
+                    HorizontalAlignment="Left" 
+                    Style="{StaticResource BtnWinControl}"
+                    Background="Orange"
+                    Command="{Binding MinimizeAppCommand}">
+            </Button>
+
+            <Button ToolTip="Close"
+                    HorizontalAlignment="Right" 
+                    Style="{StaticResource BtnWinControl}"
+                    Background="Red"
+                    Command="{Binding CloseAppCommand}">
+            </Button>
+
+        </Grid>
+    </Grid>
+</Window>

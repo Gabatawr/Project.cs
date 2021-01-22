@@ -173,6 +173,8 @@ namespace ADONET_Base
                 cmd.Parameters["@val"].Value = i;
                 Console.WriteLine(i + " >> " + GabQuery.TryExecuteScalar<int>(cmd));
             }
+            cmd.Parameters.Clear();
+
             #endregion Select N >> Count
             //-----------------------------------------------------------------
             #region Exit
