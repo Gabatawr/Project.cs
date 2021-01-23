@@ -1,0 +1,19 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Style x:Key="EnterText" TargetType="{x:Type TextBox}">
+
+        <Setter Property="Template" Value="{StaticResource TmpTextBoxBorder}"/>
+
+        <Setter Property="Margin" Value="8,0,8,8"/>
+        <Setter Property="Padding" Value="4,2"/>
+
+        <Setter Property="Background" Value="#F555"/>
+        <Setter Property="Foreground" Value="White"/>
+
+        <Setter Property="FontFamily" Value="Consolas"/>
+        <Setter Property="FontSize" Value="16"/>
+        
+    </Style>
+    
+</ResourceDictionary>

@@ -6,7 +6,17 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Resources/Styles/Button.Base.xaml"/>
                 <ResourceDictionary Source="Resources/Styles/Button.WinControl.xaml"/>
+                
+                <ResourceDictionary Source="Resources/Styles/TextBlock.xaml"/>
+                
+                <ResourceDictionary Source="Resources/Styles/Template.TextBox.Border.xaml"/>
+                <ResourceDictionary Source="Resources/Styles/TextBox.xaml"/>
+                
+                <ResourceDictionary Source="Resources/Styles/Template.PasswordBox.Border.xaml"/>
+                <ResourceDictionary Source="Resources/Styles/PasswordBox.xaml"/>
+                
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

@@ -10,7 +10,7 @@ namespace ADONET_WPF.ViewModels
         private Command _MoveAppCommand;
         public Command MoveAppCommand
         {
-            get => _MoveAppCommand ?? new MoveAppCommand();
+            get => _MoveAppCommand ??= new MoveAppCommand();
             set => _MoveAppCommand = value;
         }
 
@@ -21,7 +21,7 @@ namespace ADONET_WPF.ViewModels
         private Command _CloseAppCommand;
         public Command CloseAppCommand
         {
-            get => _CloseAppCommand ?? new CloseAppCommand();
+            get => _CloseAppCommand ??= new CloseAppCommand();
             set => _CloseAppCommand = value;
         }
 
@@ -32,10 +32,21 @@ namespace ADONET_WPF.ViewModels
         private Command _MinimizeAppCommand;
         public Command MinimizeAppCommand
         {
-            get => _MinimizeAppCommand ?? new MinimizeAppCommand();
+            get => _MinimizeAppCommand ??= new MinimizeAppCommand();
             set => _MinimizeAppCommand = value;
         }
 
         #endregion Command : MinimizeAppCommand
+        //--------------------------------------------------------------------
+        #region Command : ConnectCommand
+
+        private Command _ConnectCommand;
+        public Command ConnectCommand
+        {
+            get => _ConnectCommand ??= new ConnectCommand(this);
+            set => _ConnectCommand = value;
+        }
+
+        #endregion Command : ConnectCommand
     }
 }
