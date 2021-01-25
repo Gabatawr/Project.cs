@@ -36,10 +36,32 @@ namespace ADONET_WPF.ViewModels
         private SolidColorBrush _ConnectColorParam;
         public SolidColorBrush ConnectColorParam
         {
-            get => _ConnectColorParam ??= new SolidColorBrush(Palitra.Disconnect);
+            get => _ConnectColorParam ??= new SolidColorBrush(Palitra.ServerDisconnected);
             set => Set(ref _ConnectColorParam, value);
         }
 
         #endregion SolidColorBrush : ConnectColorParam
+        //--------------------------------------------------------------------
+        #region SolidColorBrush : WinAuthParam
+
+        private SolidColorBrush _WinAuthParam;
+        public SolidColorBrush WinAuthParam
+        {
+            get => _WinAuthParam ??= new SolidColorBrush(Palitra.GetAuthMethodColor(ConnectionMethod, ConnectionMethods.Windows));
+            set => Set(ref _WinAuthParam, value);
+        }
+
+        #endregion SolidColorBrush : WinAuthParam
+        //--------------------------------------------------------------------
+        #region SolidColorBrush : SqlAuthParam
+
+        private SolidColorBrush _SqlAuthParam;
+        public SolidColorBrush SqlAuthParam
+        {
+            get => _SqlAuthParam ??= new SolidColorBrush(Palitra.GetAuthMethodColor(ConnectionMethod, ConnectionMethods.SqlServer));
+            set => Set(ref _SqlAuthParam, value);
+        }
+
+        #endregion SolidColorBrush : SqlAuthParam
     }
 }

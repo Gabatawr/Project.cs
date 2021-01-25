@@ -48,5 +48,16 @@ namespace ADONET_WPF.ViewModels
         }
 
         #endregion Command : ConnectCommand
+        //--------------------------------------------------------------------
+        #region Command : ChangeAuthMethodCommand
+
+        private Command _ChangeAuthMethodCommand;
+        public Command ChangeAuthMethodCommand
+        {
+            get => _ChangeAuthMethodCommand ??= new ChangeAuthMethodCommand(this);
+            set => _ChangeAuthMethodCommand = value;
+        }
+
+        #endregion Command : ConnectCommand
     }
 }

@@ -44,6 +44,10 @@ namespace ADONET_WPF.Infrastructure.Services
             string initialCatalog = ConfigurationService.GetSectionValue(cs, a, "InitialCatalog");
             connectionStringBuilder.InitialCatalog = initialCatalog;
 
+            connectionStringBuilder.UserID = userID;
+            connectionStringBuilder.Password = password;
+
+
             return string.IsNullOrEmpty(dataSource)     is false && 
                    string.IsNullOrEmpty(initialCatalog) is false &&
                    string.IsNullOrEmpty(userID)         is false &&

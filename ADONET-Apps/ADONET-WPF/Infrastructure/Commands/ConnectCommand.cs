@@ -12,11 +12,9 @@ namespace ADONET_WPF.Infrastructure.Commands
 
         public override void Execute(object e) 
         {
-            
-
-            if (AuthenticationService.AuthenticationWindows())
+            if (vm.ConnectionMethod == ConnectionMethods.Windows && AuthenticationService.AuthenticationWindows())
             {
-                vm.ConnectColorParam.Color = Palitra.Connect;
+                vm.ConnectColorParam.Color = Palitra.ServerConnected;
 
                 // Test
                 SqlService.Connection.Open();
@@ -24,8 +22,27 @@ namespace ADONET_WPF.Infrastructure.Commands
                 vm.LoginParam = db.Substring((db.LastIndexOf('\\') + 1), db.Length - db.LastIndexOf('\\') - 1);
                 SqlService.Connection.Close();
             }
+
+            else if (vm.ConnectionMethod == ConnectionMethods.SqlServer 
+                && AuthenticationService.AuthenticationSqlServer(vm.LoginParam, vm.PasswordParam))
+            {
+                vm.ConnectColorParam.Color = Palitra.ServerConnected;
+
+                // Test
+                SqlService.Connection.Open();
+                //string db = SqlService.Connection.Database;
+                //vm.LoginParam = db.Substring((db.LastIndexOf('\\') + 1), db.Length - db.LastIndexOf('\\') - 1);
+
+                SqlService.Connection.Close();
+            }
         }
-                
-        public override bool CanExecute(object e) => true;//string.IsNullOrEmpty(vm.LoginParam) && string.IsNullOrEmpty(vm.PasswordParam);
+
+        public override bool CanExecute(object e)
+        {
+            return vm.ConnectionMethod == ConnectionMethods.Windows
+                   || (vm.ConnectionMethod == ConnectionMethods.SqlServer
+                       && string.IsNullOrEmpty(vm.LoginParam) 
+                       && string.IsNullOrEmpty(vm.PasswordParam));
+        }
     }
 }
