@@ -63,5 +63,16 @@ namespace ADONET_WPF.ViewModels
         }
 
         #endregion SolidColorBrush : SqlAuthParam
+        //--------------------------------------------------------------------
+        #region SolidColorBrush : IsUserAuthParam
+
+        private bool _IsUserAuthParam;
+        public bool IsUserAuthParam
+        {
+            get => _IsUserAuthParam;
+            set => Set(ref _IsUserAuthParam, value);
+        }
+
+        #endregion SolidColorBrush : SqlAuthParam
     }
 }

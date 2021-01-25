@@ -9,6 +9,8 @@ namespace ADONET_WPF.ViewModels
         public MainWindowViewModel()
         {
             ConnectionMethod = ConnectionMethods.Windows;
+
+            _IsUserAuthParam = ConnectionMethod == ConnectionMethods.SqlServer;
         }
     }
 }

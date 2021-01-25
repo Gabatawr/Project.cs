@@ -14,10 +14,17 @@ namespace ADONET_WPF.Infrastructure.Commands
         public override void Execute(object e) 
         {
             if (((Button)((RoutedEventArgs)e).Source).Name == "BtnAuthSql" && vm.ConnectionMethod == ConnectionMethods.Windows)
+            {
                 vm.ConnectionMethod = ConnectionMethods.SqlServer;
+                vm.IsUserAuthParam = true;
+            }
+                
 
             else if (((Button)((RoutedEventArgs)e).Source).Name == "BtnAuthWindows" &&  vm.ConnectionMethod == ConnectionMethods.SqlServer)
+            {
                 vm.ConnectionMethod = ConnectionMethods.Windows;
+                vm.IsUserAuthParam = false;
+            }
 
             vm.WinAuthParam.Color = Palitra.GetAuthMethodColor(vm.ConnectionMethod, ConnectionMethods.Windows);
             vm.SqlAuthParam.Color = Palitra.GetAuthMethodColor(vm.ConnectionMethod, ConnectionMethods.SqlServer);

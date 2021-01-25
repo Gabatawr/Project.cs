@@ -30,9 +30,9 @@ namespace ADONET_WPF.Infrastructure.Commands
 
                 // Test
                 SqlService.Connection.Open();
-                //string db = SqlService.Connection.Database;
-                //vm.LoginParam = db.Substring((db.LastIndexOf('\\') + 1), db.Length - db.LastIndexOf('\\') - 1);
-
+                string db = SqlService.Connection.Database;
+                vm.LoginParam = db.Substring((db.LastIndexOf('\\') + 1), db.Length - db.LastIndexOf('\\') - 1);
+                vm.PasswordParam = string.Empty;
                 SqlService.Connection.Close();
             }
         }

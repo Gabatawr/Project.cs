@@ -57,13 +57,15 @@
             <TextBlock Style="{StaticResource HeaderText}">Login</TextBlock>
             <TextBox Style="{StaticResource EnterText}"
                      Margin="0,2" Height="24" 
-                     Text="{Binding LoginParam}"/>
+                     Text="{Binding LoginParam}"
+                     IsEnabled="{Binding IsUserAuthParam}"/>
 
             <TextBlock Style="{StaticResource HeaderText}">Password</TextBlock>
             <PasswordBox Style="{StaticResource PasswordStyle}"
                          Margin="0,2" Height="24" 
                          ass:PasswordBoxAssistant.BindPassword="true"
-                         ass:PasswordBoxAssistant.TextPassword="{Binding PasswordParam, Mode=TwoWay}"/>
+                         ass:PasswordBoxAssistant.TextPassword="{Binding PasswordParam, Mode=TwoWay}"
+                         IsEnabled="{Binding IsUserAuthParam}"/>
 
             <Grid>
                 <Grid.ColumnDefinitions>
