@@ -12,9 +12,11 @@ namespace ADONET_WPF.Infrastructure.Commands
 
         public override void Execute(object e) 
         {
+            
+
             if (AuthenticationService.AuthenticationWindows())
             {
-                vm.ConnectColorParam.Color = ConnectColor.Connect;
+                vm.ConnectColorParam.Color = Palitra.Connect;
 
                 // Test
                 SqlService.Connection.Open();

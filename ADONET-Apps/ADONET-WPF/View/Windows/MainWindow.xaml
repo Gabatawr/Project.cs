@@ -12,8 +12,8 @@
         WindowStyle="None" AllowsTransparency="True"
         ResizeMode="CanResizeWithGrip"
         
-        Height="330" Width="550"
-        MinHeight="200" MinWidth="350"
+        Height="180" Width="220"
+        MinHeight="180" MinWidth="220"
         Background="#F222"
         
         input:MouseCommands.MouseLeftButtonDown="{Binding MoveAppCommand}">
@@ -51,40 +51,43 @@
 
         </Grid>
         <!--........................................................................-->
-        <Grid Margin="0,0" MaxHeight="144" MaxWidth="233">
-            <Grid.RowDefinitions>
+        <StackPanel Margin="6,6" Orientation="Vertical" MaxHeight="144" MaxWidth="378">
+            
 
-
-                <RowDefinition Height="18"/>
-                <RowDefinition Height="32"/>
-                <RowDefinition Height="18"/>
-                <RowDefinition Height="32"/>
-                <RowDefinition Height="18"/>
-                <RowDefinition Height="32"/>
-
-
-            </Grid.RowDefinitions>
-
-            <TextBlock Grid.Row="0" Style="{StaticResource HeaderText}">Login</TextBlock>
-            <TextBox Grid.Row="1" Style="{StaticResource EnterText}"
+            <TextBlock Style="{StaticResource HeaderText}">Login</TextBlock>
+            <TextBox Style="{StaticResource EnterText}"
+                     Margin="0,2" Height="24" 
                      Text="{Binding LoginParam}"/>
 
-            <TextBlock Grid.Row="2" Style="{StaticResource HeaderText}">Password</TextBlock>
-            <PasswordBox Grid.Row="3" Style="{StaticResource PasswordStyle}"
+            <TextBlock Style="{StaticResource HeaderText}">Password</TextBlock>
+            <PasswordBox Style="{StaticResource PasswordStyle}"
+                         Margin="0,2" Height="24" 
                          ass:PasswordBoxAssistant.BindPassword="true"
                          ass:PasswordBoxAssistant.TextPassword="{ Binding Path=PasswordParam }"/>
 
-            <Grid Grid.Row="5">
-                
-                <Button Grid.Column="1"
-                        FontWeight="Medium"
-                        Margin="8,0,8,8"
-                        Background="#007DFF"
-                        Foreground="White"
-                        input:MouseCommands.Click="{Binding ConnectCommand}">Connect</Button>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <Button Grid.Column="0" Style="{StaticResource ChangeAuthMethodStyle}">
+                    Windows
+                </Button>
+
+                <Button Grid.Column="1" Style="{StaticResource ChangeAuthMethodStyle}">
+                    SQL Server
+                </Button>
             </Grid>
+
+            <Button Height="24" Margin="0,2"
+                    FontWeight="Medium"
+                    Background="#007DFF"
+                    Foreground="White"
+                    input:MouseCommands.Click="{Binding ConnectCommand}">Connect</Button>
             
-        </Grid>
+            
+        </StackPanel>
         <!--........................................................................-->
         <Border ToolTip="Connection status"
                 VerticalAlignment="Bottom"

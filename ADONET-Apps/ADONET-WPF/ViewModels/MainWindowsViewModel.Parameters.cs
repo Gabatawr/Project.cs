@@ -36,7 +36,7 @@ namespace ADONET_WPF.ViewModels
         private SolidColorBrush _ConnectColorParam;
         public SolidColorBrush ConnectColorParam
         {
-            get => _ConnectColorParam ??= new SolidColorBrush(ConnectColor.Disconnect);
+            get => _ConnectColorParam ??= new SolidColorBrush(Palitra.Disconnect);
             set => Set(ref _ConnectColorParam, value);
         }
 

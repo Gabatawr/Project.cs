@@ -8,6 +8,7 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Resources/Styles/Button.Base.xaml"/>
                 <ResourceDictionary Source="Resources/Styles/Button.WinControl.xaml"/>
+                <ResourceDictionary Source="Resources/Styles/Button.ChangeAuthMethod.xaml"/>
                 
                 <ResourceDictionary Source="Resources/Styles/TextBlock.xaml"/>
                 

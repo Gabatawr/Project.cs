@@ -26,8 +26,9 @@ namespace ADONET_WPF.Infrastructure.Services
 
         public static bool AuthenticationWindows()
         {
-            if (CanAuthenticationWindows()) SqlService.Connection = new(connectionStringBuilder.ConnectionString);
-            return true;
+            bool canAuth = CanAuthenticationWindows();
+            if (canAuth) SqlService.Connection = new(connectionStringBuilder.ConnectionString);
+            return canAuth;
         }
 
         static bool CanAuthenticationSqlServer(string userID, string password)
@@ -51,8 +52,9 @@ namespace ADONET_WPF.Infrastructure.Services
 
         public static bool AuthenticationSqlServer(string userID, string password)
         {
-            if (CanAuthenticationSqlServer(userID, password)) SqlService.Connection = new(connectionStringBuilder.ConnectionString);
-            return true;
+            bool canAuth = CanAuthenticationSqlServer(userID, password);
+            if (canAuth) SqlService.Connection = new(connectionStringBuilder.ConnectionString);
+            return canAuth;
         }
     }
 }
