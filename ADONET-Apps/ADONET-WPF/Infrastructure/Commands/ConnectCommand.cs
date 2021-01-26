@@ -33,7 +33,7 @@ namespace ADONET_WPF.Infrastructure.Commands
                     vm.LoginParam = db.Substring((db.LastIndexOf('\\') + 1), db.Length - db.LastIndexOf('\\') - 1);
                     vm.PasswordParam = string.Empty;
                 }
-                vm.SqlServer.Connection.Close();
+                //vm.SqlServer.Connection.Close();
             }
         }
 
