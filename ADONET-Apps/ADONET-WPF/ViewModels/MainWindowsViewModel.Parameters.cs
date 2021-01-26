@@ -8,7 +8,6 @@ namespace ADONET_WPF.ViewModels
 {
     partial class MainWindowViewModel
     {
-        //--------------------------------------------------------------------
         #region string : LoginParam
 
         private string _LoginParam;
@@ -36,7 +35,7 @@ namespace ADONET_WPF.ViewModels
         private SolidColorBrush _ConnectColorParam;
         public SolidColorBrush ConnectColorParam
         {
-            get => _ConnectColorParam ??= new SolidColorBrush(Palitra.ServerDisconnected);
+            get => _ConnectColorParam ??= new SolidColorBrush(Colors.White);
             set => Set(ref _ConnectColorParam, value);
         }
 

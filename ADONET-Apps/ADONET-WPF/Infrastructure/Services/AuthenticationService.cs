@@ -1,4 +1,5 @@
 ﻿using System.Data.SqlClient;
+using ADONET_WPF.ViewModels;
 
 namespace ADONET_WPF.Infrastructure.Services
 {
@@ -24,10 +25,10 @@ namespace ADONET_WPF.Infrastructure.Services
             return string.IsNullOrEmpty(dataSource) is false && string.IsNullOrEmpty(attachDBFilename) is false;
         }
 
-        public static bool AuthenticationWindows()
+        public static bool AuthenticationWindows(MainWindowViewModel vm)
         {
             bool canAuth = CanAuthenticationWindows();
-            if (canAuth) SqlService.Connection = new(connectionStringBuilder.ConnectionString);
+            if (canAuth) vm.SqlServer.Connect(vm, connectionStringBuilder);
             return canAuth;
         }
 
@@ -54,10 +55,10 @@ namespace ADONET_WPF.Infrastructure.Services
                    string.IsNullOrEmpty(password)       is false;
         }
 
-        public static bool AuthenticationSqlServer(string userID, string password)
+        public static bool AuthenticationSqlServer(MainWindowViewModel vm)
         {
-            bool canAuth = CanAuthenticationSqlServer(userID, password);
-            if (canAuth) SqlService.Connection = new(connectionStringBuilder.ConnectionString);
+            bool canAuth = CanAuthenticationSqlServer(vm.LoginParam, vm.PasswordParam);
+            if (canAuth) vm.SqlServer.Connect(vm, connectionStringBuilder);
             return canAuth;
         }
     }

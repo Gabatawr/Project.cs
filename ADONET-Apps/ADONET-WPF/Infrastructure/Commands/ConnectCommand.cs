@@ -1,4 +1,5 @@
-﻿using ADONET_WPF.Infrastructure.Commands.Base;
+﻿using System.Threading;
+using ADONET_WPF.Infrastructure.Commands.Base;
 using ADONET_WPF.Infrastructure.Services;
 using ADONET_WPF.Models;
 using ADONET_WPF.ViewModels;
@@ -12,28 +13,29 @@ namespace ADONET_WPF.Infrastructure.Commands
 
         public override void Execute(object e) 
         {
-            if (vm.ConnectionMethod == ConnectionMethods.Windows && AuthenticationService.AuthenticationWindows())
+            if (vm.ConnectionMethod == ConnectionMethods.Windows
+                && AuthenticationService.AuthenticationWindows(vm))
             {
-                vm.ConnectColorParam.Color = Palitra.ServerConnected;
-
                 // Test
-                SqlService.Connection.Open();
-                string db = SqlService.Connection.Database;
-                vm.LoginParam = db.Substring((db.LastIndexOf('\\') + 1), db.Length - db.LastIndexOf('\\') - 1);
-                SqlService.Connection.Close();
+                vm.SqlServer.Connection.Open();
+                {
+                    string db = vm.SqlServer.Connection.Database;
+                    vm.LoginParam = db.Substring((db.LastIndexOf('\\') + 1), db.Length - db.LastIndexOf('\\') - 1);
+                }
+                //vm.SqlServer.Connection.Close();
             }
 
             else if (vm.ConnectionMethod == ConnectionMethods.SqlServer 
-                && AuthenticationService.AuthenticationSqlServer(vm.LoginParam, vm.PasswordParam))
+                && AuthenticationService.AuthenticationSqlServer(vm))
             {
-                vm.ConnectColorParam.Color = Palitra.ServerConnected;
-
                 // Test
-                SqlService.Connection.Open();
-                string db = SqlService.Connection.Database;
-                vm.LoginParam = db.Substring((db.LastIndexOf('\\') + 1), db.Length - db.LastIndexOf('\\') - 1);
-                vm.PasswordParam = string.Empty;
-                SqlService.Connection.Close();
+                vm.SqlServer.Connection.Open();
+                {
+                    string db = vm.SqlServer.Connection.Database;
+                    vm.LoginParam = db.Substring((db.LastIndexOf('\\') + 1), db.Length - db.LastIndexOf('\\') - 1);
+                    vm.PasswordParam = string.Empty;
+                }
+                vm.SqlServer.Connection.Close();
             }
         }
 

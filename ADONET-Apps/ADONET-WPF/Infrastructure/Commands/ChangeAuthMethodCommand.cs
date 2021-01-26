@@ -15,14 +15,11 @@ namespace ADONET_WPF.Infrastructure.Commands
         {
             if (((Button)((RoutedEventArgs)e).Source).Name == "BtnAuthSql" && vm.ConnectionMethod == ConnectionMethods.Windows)
             {
-                vm.ConnectionMethod = ConnectionMethods.SqlServer;
                 vm.IsUserAuthParam = true;
             }
                 
-
             else if (((Button)((RoutedEventArgs)e).Source).Name == "BtnAuthWindows" &&  vm.ConnectionMethod == ConnectionMethods.SqlServer)
             {
-                vm.ConnectionMethod = ConnectionMethods.Windows;
                 vm.IsUserAuthParam = false;
             }
 
