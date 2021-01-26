@@ -1,8 +1,5 @@
-﻿using System.Text;
-using System.Windows.Media;
-using ADONET_WPF.Infrastructure.Commands;
-using ADONET_WPF.Infrastructure.Commands.Base;
-using ADONET_WPF.Models;
+﻿using System.Windows.Media;
+using ADONET_WPF.Infrastructure.Services;
 
 namespace ADONET_WPF.ViewModels
 {
@@ -46,7 +43,7 @@ namespace ADONET_WPF.ViewModels
         private SolidColorBrush _WinAuthParam;
         public SolidColorBrush WinAuthParam
         {
-            get => _WinAuthParam ??= new SolidColorBrush(Palitra.GetAuthMethodColor(ConnectionMethod, ConnectionMethods.Windows));
+            get => _WinAuthParam ??= new SolidColorBrush(AuthServer.GetAuthMethodColor(AuthenticationService.AuthMethods.Windows));
             set => Set(ref _WinAuthParam, value);
         }
 
@@ -57,7 +54,7 @@ namespace ADONET_WPF.ViewModels
         private SolidColorBrush _SqlAuthParam;
         public SolidColorBrush SqlAuthParam
         {
-            get => _SqlAuthParam ??= new SolidColorBrush(Palitra.GetAuthMethodColor(ConnectionMethod, ConnectionMethods.SqlServer));
+            get => _SqlAuthParam ??= new SolidColorBrush(AuthServer.GetAuthMethodColor(AuthenticationService.AuthMethods.SqlServer));
             set => Set(ref _SqlAuthParam, value);
         }
 

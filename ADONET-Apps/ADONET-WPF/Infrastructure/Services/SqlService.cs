@@ -1,17 +1,18 @@
-﻿using System;
-using System.Data;
+﻿using System.Data;
 using System.Data.SqlClient;
 using System.Windows.Media;
-using ADONET_WPF.Models;
 using ADONET_WPF.ViewModels;
 
 namespace ADONET_WPF.Infrastructure.Services
 {
     internal class SqlService
     {
+        private MainWindowViewModel vm;
         public SqlConnection Connection { get; private set; }
 
-        public void Connect(MainWindowViewModel vm, SqlConnectionStringBuilder sb)
+        public SqlService(MainWindowViewModel vm) { this.vm = vm; }
+
+        public void Connect(SqlConnectionStringBuilder sb)
         {
             Connection = new SqlConnection(sb.ConnectionString);
 

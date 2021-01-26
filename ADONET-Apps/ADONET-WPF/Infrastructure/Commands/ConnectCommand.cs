@@ -1,7 +1,5 @@
-﻿using System.Threading;
-using ADONET_WPF.Infrastructure.Commands.Base;
+﻿using ADONET_WPF.Infrastructure.Commands.Base;
 using ADONET_WPF.Infrastructure.Services;
-using ADONET_WPF.Models;
 using ADONET_WPF.ViewModels;
 
 namespace ADONET_WPF.Infrastructure.Commands
@@ -13,8 +11,8 @@ namespace ADONET_WPF.Infrastructure.Commands
 
         public override void Execute(object e) 
         {
-            if (vm.ConnectionMethod == ConnectionMethods.Windows
-                && AuthenticationService.AuthenticationWindows(vm))
+            if (vm.AuthServer.AuthMethod == AuthenticationService.AuthMethods.Windows
+                && vm.AuthServer.AuthenticationWindows())
             {
                 // Test
                 vm.SqlServer.Connection.Open();
@@ -25,8 +23,8 @@ namespace ADONET_WPF.Infrastructure.Commands
                 //vm.SqlServer.Connection.Close();
             }
 
-            else if (vm.ConnectionMethod == ConnectionMethods.SqlServer 
-                && AuthenticationService.AuthenticationSqlServer(vm))
+            else if (vm.AuthServer.AuthMethod == AuthenticationService.AuthMethods.SqlServer
+                && vm.AuthServer.AuthenticationSqlServer())
             {
                 // Test
                 vm.SqlServer.Connection.Open();
@@ -41,8 +39,8 @@ namespace ADONET_WPF.Infrastructure.Commands
 
         public override bool CanExecute(object e)
         {
-            return vm.ConnectionMethod == ConnectionMethods.Windows
-                   || (vm.ConnectionMethod == ConnectionMethods.SqlServer
+            return vm.AuthServer.AuthMethod == AuthenticationService.AuthMethods.Windows
+                   || (vm.AuthServer.AuthMethod == AuthenticationService.AuthMethods.SqlServer
                        && string.IsNullOrEmpty(vm.LoginParam) 
                        && string.IsNullOrEmpty(vm.PasswordParam));
         }

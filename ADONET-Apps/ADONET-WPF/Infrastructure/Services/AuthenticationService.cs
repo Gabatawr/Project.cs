@@ -1,13 +1,25 @@
 ﻿using System.Data.SqlClient;
+using System.Windows.Media;
 using ADONET_WPF.ViewModels;
 
 namespace ADONET_WPF.Infrastructure.Services
 {
-    static class AuthenticationService
+    internal class AuthenticationService
     {
-        static SqlConnectionStringBuilder connectionStringBuilder;
+        public enum AuthMethods { Windows, SqlServer }
+        public AuthMethods AuthMethod { get; set; } = AuthMethods.Windows;
 
-        static bool CanAuthenticationWindows()
+        public Color GetAuthMethodColor(AuthMethods p)
+            => AuthMethod == p ? 
+                new Color() { A = 255, R = 119, G = 119, B = 119 } // Enable
+                : new Color() { A = 255, R = 68, G = 68, B = 68 }; // Disable
+
+        private MainWindowViewModel vm;
+        private SqlConnectionStringBuilder connectionStringBuilder;
+
+        public AuthenticationService(MainWindowViewModel vm) { this.vm = vm; }
+
+        private bool CanAuthenticationWindows()
         {
             connectionStringBuilder = new();
 
@@ -25,14 +37,14 @@ namespace ADONET_WPF.Infrastructure.Services
             return string.IsNullOrEmpty(dataSource) is false && string.IsNullOrEmpty(attachDBFilename) is false;
         }
 
-        public static bool AuthenticationWindows(MainWindowViewModel vm)
+        public bool AuthenticationWindows()
         {
             bool canAuth = CanAuthenticationWindows();
-            if (canAuth) vm.SqlServer.Connect(vm, connectionStringBuilder);
+            if (canAuth) vm.SqlServer.Connect(connectionStringBuilder);
             return canAuth;
         }
 
-        static bool CanAuthenticationSqlServer(string userID, string password)
+        private bool CanAuthenticationSqlServer(string userID, string password)
         {
             connectionStringBuilder = new();
 
@@ -55,10 +67,10 @@ namespace ADONET_WPF.Infrastructure.Services
                    string.IsNullOrEmpty(password)       is false;
         }
 
-        public static bool AuthenticationSqlServer(MainWindowViewModel vm)
+        public bool AuthenticationSqlServer()
         {
             bool canAuth = CanAuthenticationSqlServer(vm.LoginParam, vm.PasswordParam);
-            if (canAuth) vm.SqlServer.Connect(vm, connectionStringBuilder);
+            if (canAuth) vm.SqlServer.Connect(connectionStringBuilder);
             return canAuth;
         }
     }
