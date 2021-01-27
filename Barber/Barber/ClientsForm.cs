@@ -39,5 +39,14 @@ namespace Barber
             dataGridView1.DataSource = table;
         }
         //---------------------------------------------------------------------
+        private void bntSave_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Adapter.Update(Dataset);
+                MessageBox.Show("Saved");
+            }
+            catch (Exception ex) { MessageBox.Show("OMG!"); }
+        }
     }
 }
