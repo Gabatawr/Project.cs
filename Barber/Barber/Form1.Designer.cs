@@ -20,12 +20,14 @@ namespace Barber
             this.DatabaseTitle = new System.Windows.Forms.Label();
             this.btnGenders = new System.Windows.Forms.Button();
             this.btnBarbers = new System.Windows.Forms.Button();
+            this.btnClients = new System.Windows.Forms.Button();
+            this.btnClient = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // DatabaseTitle
             // 
             this.DatabaseTitle.AutoSize = true;
-            this.DatabaseTitle.Location = new System.Drawing.Point(12, 9);
+            this.DatabaseTitle.Location = new System.Drawing.Point(40, 9);
             this.DatabaseTitle.Name = "DatabaseTitle";
             this.DatabaseTitle.Size = new System.Drawing.Size(22, 15);
             this.DatabaseTitle.TabIndex = 0;
@@ -33,7 +35,7 @@ namespace Barber
             // 
             // btnGenders
             // 
-            this.btnGenders.Location = new System.Drawing.Point(12, 27);
+            this.btnGenders.Location = new System.Drawing.Point(12, 47);
             this.btnGenders.Name = "btnGenders";
             this.btnGenders.Size = new System.Drawing.Size(145, 23);
             this.btnGenders.TabIndex = 1;
@@ -43,7 +45,7 @@ namespace Barber
             // 
             // btnBarbers
             // 
-            this.btnBarbers.Location = new System.Drawing.Point(12, 56);
+            this.btnBarbers.Location = new System.Drawing.Point(12, 76);
             this.btnBarbers.Name = "btnBarbers";
             this.btnBarbers.Size = new System.Drawing.Size(145, 23);
             this.btnBarbers.TabIndex = 2;
@@ -51,11 +53,33 @@ namespace Barber
             this.btnBarbers.UseVisualStyleBackColor = true;
             this.btnBarbers.Click += new System.EventHandler(this.btnBarbers_Click);
             // 
+            // btnClients
+            // 
+            this.btnClients.Location = new System.Drawing.Point(12, 105);
+            this.btnClients.Name = "btnClients";
+            this.btnClients.Size = new System.Drawing.Size(71, 23);
+            this.btnClients.TabIndex = 3;
+            this.btnClients.Text = "Clients";
+            this.btnClients.UseVisualStyleBackColor = true;
+            this.btnClients.Click += new System.EventHandler(this.btnClients_Click);
+            // 
+            // btnClient
+            // 
+            this.btnClient.Location = new System.Drawing.Point(89, 105);
+            this.btnClient.Name = "btnClient";
+            this.btnClient.Size = new System.Drawing.Size(68, 23);
+            this.btnClient.TabIndex = 4;
+            this.btnClient.Text = "Client";
+            this.btnClient.UseVisualStyleBackColor = true;
+            this.btnClient.Click += new System.EventHandler(this.btnClient_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(169, 93);
+            this.ClientSize = new System.Drawing.Size(171, 137);
+            this.Controls.Add(this.btnClient);
+            this.Controls.Add(this.btnClients);
             this.Controls.Add(this.btnBarbers);
             this.Controls.Add(this.btnGenders);
             this.Controls.Add(this.DatabaseTitle);
@@ -72,6 +96,8 @@ namespace Barber
         private System.Windows.Forms.Label DatabaseTitle;
         private System.Windows.Forms.Button btnGenders;
         private System.Windows.Forms.Button btnBarbers;
+        private System.Windows.Forms.Button btnClients;
+        private System.Windows.Forms.Button btnClient;
     }
 }
 

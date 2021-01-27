@@ -32,14 +32,6 @@ namespace Barber
             SqlConnection connect = new SqlConnection();
             connect.ConnectionString = connectionStringBuilder.ConnectionString;
 
-            try { connect.Open(); }
-            catch (SqlException ex)
-            {
-                MessageBox.Show(ex.Message);
-                throw;
-            }
-            //MessageBox.Show("Connection: OK");
-
             return connect;
         }
         public SqlConnection Connection { get; private set; }
@@ -47,39 +39,52 @@ namespace Barber
         private void Form1_Load(object sender, EventArgs e)
         {
             Connection = TryConnection();
-            #region
-            //connection.StateChange += (s, e) => 
-            //{
-            //    if (s is SqlConnection connect)
-            //    {
-            //        label1.ForeColor = connect.State switch
-            //        {
-            //            ConnectionState.Connecting => new Color() { A = 255, R = 0, G = 125, B = 255 },
-            //            ConnectionState.Open => new Color() { A = 255, R = 68, G = 168, B = 29 },
-            //            ConnectionState.Closed => new Color() { A = 255, R = 168, G = 29, B = 29 },
 
-            //            //ConnectionState.Executing => colorExecuting,
-            //            //ConnectionState.Fetching => colorFetching,
-            //            //ConnectionState.Broken => colorBroken,
+            #region StateChange
+            Connection.StateChange += (s, e) =>
+            {
+                DatabaseTitle.BackColor = Connection.State switch
+                {
+                    ConnectionState.Connecting => Color.FromArgb(255, 0, 0, 255),
+                    ConnectionState.Open =>       Color.FromArgb(255, 0, 255, 0),
+                    ConnectionState.Closed =>     Color.FromArgb(255, 255, 0, 0),
 
-            //            _ => Colors.White
-            //        };
-            //    }
-            //};
-            #endregion
+                    //ConnectionState.Executing => colorExecuting,
+                    //ConnectionState.Fetching => colorFetching,
+                    //ConnectionState.Broken => colorBroken,
+
+                    _ => Color.FromArgb(255, 128, 128, 128)
+                };
+            };
+            #endregion StateChange
+            
+            Connection.Open();
             DatabaseTitle.Text = Connection.Database.Substring((Connection.Database.LastIndexOf('\\') + 1), Connection.Database.Length - Connection.Database.LastIndexOf('\\') - 1);
         }
         //---------------------------------------------------------------------
         private void btnGender_Click(object sender, EventArgs e)
         {
-            GendersForm genders = new GendersForm();
+            GendersForm genders = new();
             genders.ShowDialog(this);
         }
         //---------------------------------------------------------------------
         private void btnBarbers_Click(object sender, EventArgs e)
         {
-            BarbersForm barbers = new BarbersForm();
+            BarbersForm barbers = new();
             barbers.ShowDialog(this);
         }
+        //---------------------------------------------------------------------
+        private void btnClients_Click(object sender, EventArgs e)
+        {
+            ClientsForm clients = new();
+            clients.ShowDialog(this);
+        }
+        //---------------------------------------------------------------------
+        private void btnClient_Click(object sender, EventArgs e)
+        {
+            ClientForm client = new();
+            client.ShowDialog(this);
+        }
+        //---------------------------------------------------------------------
     }
 }
