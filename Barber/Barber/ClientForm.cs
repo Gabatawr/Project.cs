@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static Barber.Form1;
 
 namespace Barber
 {
@@ -24,7 +25,7 @@ namespace Barber
         {
             Connection = (Owner as Form1).Connection;
 
-            SqlCommand cmd = new(@"select c.[Id], c.[SurName], c.[Name], c.[SecName], c.[GenderId], g.[Name], g.[Description], c.[Phone], c.[Email] from [Clients] c join [Gender] g on g.Id = c.GenderId", Connection);
+            SqlCommand cmd = new(@"select Id, SurName, Name, SecName, GenderId, Phone, Email from [Clients]", Connection);
             SqlDataReader reader = cmd.ExecuteReader();
 
             Clients = new();
@@ -37,10 +38,8 @@ namespace Barber
                     Name = reader.GetString(2),
                     SecName = reader.GetString(3),
                     GenderId = reader.GetInt32(4),
-                    GenderName = reader.GetString(5),
-                    GenderDescription = reader.GetString(6),
-                    Phone = reader.GetString(7),
-                    Email = reader.GetString(8)
+                    Phone = reader.GetString(5),
+                    Email = reader.GetString(6)
                 });
             }
             reader.Close();
@@ -77,10 +76,10 @@ namespace Barber
             else btnNext.Enabled = false;
         }
         //---------------------------------------------------------------------
-        private List<Client> Clients;
-        private int CurrentClientIndex;
+        public List<Client> Clients;
+        public int CurrentClientIndex;
         //---------------------------------------------------------------------
-        private void ShowClient()
+        public void ShowClient()
         {
             Client c = Clients[CurrentClientIndex];
 
@@ -89,22 +88,37 @@ namespace Barber
             lbName.Text = c.Name;
             lbSecName.Text = c.SecName;
             lbGender.Text = c.GenderId.ToString();
-            lbGenderName.Text = c.GenderName.ToString();
-            toolTip1.SetToolTip(lbGenderName, c.GenderDescription.ToString());
+            lbGenderName.Text = (Owner as Form1).Genders.Where<Gender>(g => g.Id == c.GenderId).First().Name;
+            toolTip1.SetToolTip(lbGenderName, (Owner as Form1).Genders.Where<Gender>(g => g.Id == c.GenderId).First().Description);
             lbPhone.Text = c.Phone;
             lbEmail.Text = c.Email;
         }
         //----------------------------------------------------------------------
+        private void btnAdd_Click(object sender, EventArgs e)
+        {
+            AddClientForm addClient = new();
+            addClient.ShowDialog(this);
+
+            ShowClient();
+            lbCount.Text = Clients.Count.ToString();
+        }
+        private void btnEdit_Click(object sender, EventArgs e)
+        {
+            EditClientForm editClient = new();
+            editClient.ShowDialog(this);
+
+            ShowClient();
+            lbCount.Text = Clients.Count.ToString();
+        }
+        //----------------------------------------------------------------------
     }
-    class Client
+    public class Client
     {
         public int Id { get; set; }
         public string SurName { get; set; }
         public string Name { get; set; }
         public string SecName { get; set; }
         public int GenderId { get; set; }
-        public string GenderName { get; set; }
-        public string GenderDescription { get; set; }
         public string Phone { get; set; }
         public string Email { get; set; }
     }

@@ -60,6 +60,21 @@ namespace Barber
             
             Connection.Open();
             DatabaseTitle.Text = Connection.Database.Substring((Connection.Database.LastIndexOf('\\') + 1), Connection.Database.Length - Connection.Database.LastIndexOf('\\') - 1);
+
+            SqlCommand cmd = new(@"select Id, Name, Description from [Gender]", Connection);
+            SqlDataReader reader = cmd.ExecuteReader();
+
+            Genders = new();
+            while (reader.Read())
+            {
+                Genders.Add(new Gender()
+                {
+                    Id = reader.GetInt32(0),
+                    Name = reader.GetString(1),
+                    Description = reader.GetString(2)
+                });
+            }
+            reader.Close();
         }
         //---------------------------------------------------------------------
         private void btnGender_Click(object sender, EventArgs e)
@@ -67,23 +82,28 @@ namespace Barber
             GendersForm genders = new();
             genders.ShowDialog(this);
         }
-        //---------------------------------------------------------------------
         private void btnBarbers_Click(object sender, EventArgs e)
         {
             BarbersForm barbers = new();
             barbers.ShowDialog(this);
         }
-        //---------------------------------------------------------------------
         private void btnClients_Click(object sender, EventArgs e)
         {
             ClientsForm clients = new();
             clients.ShowDialog(this);
         }
-        //---------------------------------------------------------------------
         private void btnClient_Click(object sender, EventArgs e)
         {
             ClientForm client = new();
             client.ShowDialog(this);
+        }
+        //---------------------------------------------------------------------
+        public List<Gender> Genders;
+        public class Gender
+        {
+            public int Id { get; set; }
+            public string Name { get; set; }
+            public string Description { get; set; }
         }
         //---------------------------------------------------------------------
     }
