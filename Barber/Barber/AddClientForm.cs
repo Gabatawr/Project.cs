@@ -29,6 +29,8 @@ namespace Barber
         //---------------------------------------------------------------------
         private void btnSave_Click(object sender, EventArgs e)
         {
+            #region Check
+
             int genderid;
             if (cbGender.Items.Contains(cbGender.Text))
                 genderid = (client.Owner as Form1).Genders.Where<Gender>(g => g.Name == cbGender.Text).Select<Gender, int>(g => g.Id).First();
@@ -77,6 +79,8 @@ namespace Barber
                 MessageBox.Show("Email is empty!");
                 return;
             }
+
+            #endregion Check
             //---------------------------------------------------------------------
             SqlCommand cmd = new($"insert into [Clients] (SurName, Name, SecName, GenderId, Phone, Email) values (N'{surname}', N'{name}', N'{secname}', {genderid}, N'{phone}', N'{email}')",
                                  client.Connection
