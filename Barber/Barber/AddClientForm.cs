@@ -14,11 +14,26 @@ namespace Barber
 {
     public partial class AddClientForm : Form
     {
-        public AddClientForm() { InitializeComponent(); }
-        private void btnClose_Click(object sender, EventArgs e) => Close();
+        virtual protected void FormLoadHandler()
+        {
+            Load += AddClientForm_Load;
+        }
+        public AddClientForm(string title = "AddClientForm") 
+        { 
+            InitializeComponent();
+
+            Name = title;
+            Text = title;
+
+            btnSave.Click += btnSave_Click;
+            btnClose.Click += btnClose_Click;
+
+            FormLoadHandler();
+        }
+        protected void btnClose_Click(object sender, EventArgs e) => Close();
         //---------------------------------------------------------------------
-        ClientForm client;
-        private void AddClientForm_Load(object sender, EventArgs e)
+        protected ClientForm client;
+        protected void Base_Load()
         {
             client = Owner as ClientForm;
 
@@ -26,83 +41,86 @@ namespace Barber
             cbGender.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
             cbGender.Items.AddRange((client.Owner as Form1).Genders.Select<Gender, string>(g => g.Name).ToArray());
         }
-        //---------------------------------------------------------------------
-        private void btnSave_Click(object sender, EventArgs e)
+        private void AddClientForm_Load(object sender, EventArgs e)
         {
-            #region Check
-
-            int genderid;
+            Base_Load();
+        }
+        //---------------------------------------------------------------------
+        virtual protected bool Check(Client c)
+        {
             if (cbGender.Items.Contains(cbGender.Text))
-                genderid = (client.Owner as Form1).Genders.Where<Gender>(g => g.Name == cbGender.Text).Select<Gender, int>(g => g.Id).First();
+                c.GenderId = (client.Owner as Form1).Genders.Where<Gender>(g => g.Name == cbGender.Text).Select<Gender, int>(g => g.Id).First();
             else
-            { 
-                MessageBox.Show("Incorrect Gender!"); 
-                return; 
+            {
+                MessageBox.Show("Incorrect Gender!");
+                return false;
             }
 
-            string surname;
-            if (tbSurName.Text != string.Empty) surname = tbSurName.Text;
+            if (tbSurName.Text != string.Empty)
+                c.SurName = tbSurName.Text;
             else
             {
                 MessageBox.Show("SurName is empty!");
-                return;
+                return false;
             }
 
-            string name;
-            if (tbName.Text != string.Empty) name = tbName.Text;
+            if (tbName.Text != string.Empty)
+                c.Name = tbName.Text;
             else
             {
                 MessageBox.Show("Name is empty!");
-                return;
+                return false;
             }
 
-            string secname;
-            if (tbSecName.Text != string.Empty) secname = tbSecName.Text;
+            if (tbSecName.Text != string.Empty)
+                c.SecName = tbSecName.Text;
             else
             {
                 MessageBox.Show("SecName is empty!");
-                return;
+                return false;
             }
 
-            string phone;
-            if (tbPhone.Text != string.Empty) phone = tbPhone.Text;
+            if (tbPhone.Text != string.Empty)
+                c.Phone = tbPhone.Text;
             else
             {
                 MessageBox.Show("Phone is empty!");
-                return;
+                return false;
             }
 
-            string email;
-            if (tbEmail.Text != string.Empty) email = tbEmail.Text;
+            if (tbEmail.Text != string.Empty)
+                c.Email = tbEmail.Text;
             else
             {
                 MessageBox.Show("Email is empty!");
-                return;
+                return false;
             }
 
-            #endregion Check
-            //---------------------------------------------------------------------
-            SqlCommand cmd = new($"insert into [Clients] (SurName, Name, SecName, GenderId, Phone, Email) values (N'{surname}', N'{name}', N'{secname}', {genderid}, N'{phone}', N'{email}')",
+            return true;
+        }
+        virtual protected void Save(Client c)
+        {
+            SqlCommand cmd = new($"insert into [Clients] (SurName, Name, SecName, GenderId, Phone, Email) values (N'{c.SurName}', N'{c.Name}', N'{c.SecName}', {c.GenderId}, N'{c.Phone}', N'{c.Email}')",
                                  client.Connection
             );
             cmd.ExecuteNonQuery();
             //---------------------------------------------------------------------
             cmd.CommandText = $"select max(Id) from [Clients]";
-            client.Clients.Add(new Client
-            {
-                Id = (int)cmd.ExecuteScalar(),
-                SurName = surname,
-                Name = name,
-                SecName = secname,
-                GenderId = genderid,
-                Phone = phone,
-                Email = email
-            });
+            c.Id = (int)cmd.ExecuteScalar();
+            client.Clients.Add(c);
 
             client.CurrentClientIndex = client.Clients.Count - 1;
-            //---------------------------------------------------------------------
-            MessageBox.Show("Client Added");
-            Close();
+        }
+        protected void btnSave_Click(object sender, EventArgs e)
+        {
+            Client c = new();
+
+            if (Check(c))
+            {
+                Save(c);
+                MessageBox.Show("Done!");
+                Close();
+            }
         }
     }
 }

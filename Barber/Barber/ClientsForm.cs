@@ -46,7 +46,7 @@ namespace Barber
                 Adapter.Update(Dataset);
                 MessageBox.Show("Saved");
             }
-            catch (Exception ex) { MessageBox.Show("OMG!"); }
+            catch (Exception) { MessageBox.Show("OMG!"); }
         }
     }
 }

@@ -12,23 +12,20 @@ using static Barber.Form1;
 
 namespace Barber
 {
-    public partial class EditClientForm : Form
+    public partial class EditClientForm : AddClientForm
     {
-        public EditClientForm() { InitializeComponent(); }
-        private void btnClose_Click(object sender, EventArgs e) => Close();
-        //---------------------------------------------------------------------
-        ClientForm client;
-        bool isChanged;
-        string oldGender;
-        private void EditClientForm_Load(object sender, EventArgs e)
+        override protected void FormLoadHandler()
         {
-            client = Owner as ClientForm;
-            isChanged = false;
-            oldGender = (client.Owner as Form1).Genders.Where<Gender>(g => g.Id == client.Clients[client.CurrentClientIndex].GenderId).First().Name;
+            Load += EditClientForm_Load;
+        }
+        public EditClientForm() : base("EditClientForm") { }
+        //---------------------------------------------------------------------
+        private string oldGender;
+        protected void EditClientForm_Load(object sender, EventArgs e)
+        {
+            Base_Load();
 
-            cbGender.AutoCompleteSource = AutoCompleteSource.ListItems;
-            cbGender.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
-            cbGender.Items.AddRange((client.Owner as Form1).Genders.Select<Gender, string>(g => g.Name).ToArray());
+            oldGender = (client.Owner as Form1).Genders.Where<Gender>(g => g.Id == client.Clients[client.CurrentClientIndex].GenderId).First().Name;
 
             tbSurName.Text = client.Clients[client.CurrentClientIndex].SurName;
             tbName.Text = client.Clients[client.CurrentClientIndex].Name;
@@ -36,22 +33,9 @@ namespace Barber
             cbGender.Text = oldGender;
             tbPhone.Text = client.Clients[client.CurrentClientIndex].Phone;
             tbEmail.Text = client.Clients[client.CurrentClientIndex].Email;
-
-            tbSurName.TextChanged += observer;
-            tbName.TextChanged += observer;
-            tbSecName.TextChanged += observer;
-            cbGender.TextChanged += observer;
-            tbPhone.TextChanged += observer;
-            tbEmail.TextChanged += observer;
         }
-
-        private void observer(object sender, EventArgs e)
-        {
-            if (isChanged is false) isChanged = true;
-        }
-
         //---------------------------------------------------------------------
-        private void btnSave_Click(object sender, EventArgs e)
+        override protected bool Check(Client c)
         {
             bool isEqual = tbSurName.Text == client.Clients[client.CurrentClientIndex].SurName
                            && tbName.Text == client.Clients[client.CurrentClientIndex].Name
@@ -59,84 +43,22 @@ namespace Barber
                            && cbGender.Text == oldGender
                            && tbPhone.Text == client.Clients[client.CurrentClientIndex].Phone
                            && tbEmail.Text == client.Clients[client.CurrentClientIndex].Email;
-            if ((isChanged is false) || isEqual)
-            {
-                Close();
-                return;
-            }
-
-            #region Check
-
-            int genderid;
-            if (cbGender.Items.Contains(cbGender.Text))
-                genderid = (client.Owner as Form1).Genders.Where<Gender>(g => g.Name == cbGender.Text).Select<Gender, int>(g => g.Id).First();
-            else
-            {
-                MessageBox.Show("Incorrect Gender!");
-                return;
-            }
-
-            string surname;
-            if (tbSurName.Text != string.Empty)
-                surname = tbSurName.Text;
-            else
-            {
-                MessageBox.Show("SurName is empty!");
-                return;
-            }
-
-            string name;
-            if (tbName.Text != string.Empty)
-                name = tbName.Text;
-            else
-            {
-                MessageBox.Show("Name is empty!");
-                return;
-            }
-
-            string secname;
-            if (tbSecName.Text != string.Empty)
-                secname = tbSecName.Text;
-            else
-            {
-                MessageBox.Show("SecName is empty!");
-                return;
-            }
-
-            string phone;
-            if (tbPhone.Text != string.Empty)
-                phone = tbPhone.Text;
-            else
-            {
-                MessageBox.Show("Phone is empty!");
-                return;
-            }
-
-            string email;
-            if (tbEmail.Text != string.Empty)
-                email = tbEmail.Text;
-            else
-            {
-                MessageBox.Show("Email is empty!");
-                return;
-            }
-
-            #endregion Check
-            //---------------------------------------------------------------------
-            SqlCommand cmd = new($"update [Clients] set SurName = N'{surname}', Name = N'{name}', SecName = N'{secname}', GenderId = {genderid}, Phone = N'{phone}', Email = N'{email}' where Id = {client.Clients[client.CurrentClientIndex].Id}",
+            if (isEqual) return false;
+            else return base.Check(c);
+        }
+        override protected void Save(Client c)
+        {
+            SqlCommand cmd = new($"update [Clients] set SurName = N'{c.SurName}', Name = N'{c.Name}', SecName = N'{c.SecName}', GenderId = {c.GenderId}, Phone = N'{c.Phone}', Email = N'{c.Email}' where Id = {client.Clients[client.CurrentClientIndex].Id}",
                                  client.Connection
             );
             cmd.ExecuteNonQuery();
             //---------------------------------------------------------------------
-            client.Clients[client.CurrentClientIndex].SurName = surname;
-            client.Clients[client.CurrentClientIndex].Name = name;
-            client.Clients[client.CurrentClientIndex].SecName = secname;
-            client.Clients[client.CurrentClientIndex].GenderId = genderid;
-            client.Clients[client.CurrentClientIndex].Phone = phone;
-            client.Clients[client.CurrentClientIndex].Email = email;
-            //---------------------------------------------------------------------
-            MessageBox.Show("Client Edited!");
-            Close();
+            client.Clients[client.CurrentClientIndex].SurName = c.SurName;
+            client.Clients[client.CurrentClientIndex].Name = c.Name;
+            client.Clients[client.CurrentClientIndex].SecName = c.SecName;
+            client.Clients[client.CurrentClientIndex].GenderId = c.GenderId;
+            client.Clients[client.CurrentClientIndex].Phone = c.Phone;
+            client.Clients[client.CurrentClientIndex].Email = c.Email;
         }
     }
 }

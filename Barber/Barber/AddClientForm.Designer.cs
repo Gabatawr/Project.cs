@@ -3,15 +3,8 @@ namespace Barber
 {
     partial class AddClientForm
     {
-        /// <summary>
-        /// Required designer variable.
-        /// </summary>
-        private System.ComponentModel.IContainer components = null;
+        protected System.ComponentModel.IContainer components = null;
 
-        /// <summary>
-        /// Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -23,10 +16,6 @@ namespace Barber
 
         #region Windows Form Designer generated code
 
-        /// <summary>
-        /// Required method for Designer support - do not modify
-        /// the contents of this method with the code editor.
-        /// </summary>
         private void InitializeComponent()
         {
             this.label8 = new System.Windows.Forms.Label();
@@ -150,7 +139,6 @@ namespace Barber
             this.btnSave.TabIndex = 15;
             this.btnSave.Text = "Save";
             this.btnSave.UseVisualStyleBackColor = true;
-            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
             // btnClose
             // 
@@ -160,7 +148,6 @@ namespace Barber
             this.btnClose.TabIndex = 16;
             this.btnClose.Text = "Close";
             this.btnClose.UseVisualStyleBackColor = true;
-            this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
             // 
             // AddClientForm
             // 
@@ -181,29 +168,25 @@ namespace Barber
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Name = "AddClientForm";
-            this.Text = "AddClientForm";
-            this.Load += new System.EventHandler(this.AddClientForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
-
         }
 
         #endregion
 
-        private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox tbSurName;
-        private System.Windows.Forms.TextBox tbName;
-        private System.Windows.Forms.TextBox tbSecName;
-        private System.Windows.Forms.TextBox tbPhone;
-        private System.Windows.Forms.TextBox tbEmail;
-        private System.Windows.Forms.ComboBox cbGender;
-        private System.Windows.Forms.Button btnSave;
-        private System.Windows.Forms.Button btnClose;
+        protected System.Windows.Forms.Label label8;
+        protected System.Windows.Forms.Label label5;
+        protected System.Windows.Forms.Label label4;
+        protected System.Windows.Forms.Label label3;
+        protected System.Windows.Forms.Label label2;
+        protected System.Windows.Forms.Label label1;
+        protected System.Windows.Forms.TextBox tbSurName;
+        protected System.Windows.Forms.TextBox tbName;
+        protected System.Windows.Forms.TextBox tbSecName;
+        protected System.Windows.Forms.TextBox tbPhone;
+        protected System.Windows.Forms.TextBox tbEmail;
+        protected System.Windows.Forms.ComboBox cbGender;
+        protected System.Windows.Forms.Button btnSave;
+        protected System.Windows.Forms.Button btnClose;
     }
 }
