@@ -1,13 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using static Barber.Form1;
 
 namespace Barber
@@ -43,8 +37,10 @@ namespace Barber
                            && cbGender.Text == oldGender
                            && tbPhone.Text == client.Clients[client.CurrentClientIndex].Phone
                            && tbEmail.Text == client.Clients[client.CurrentClientIndex].Email;
-            if (isEqual) return false;
-            else return base.Check(c);
+            if (isEqual)
+                return false;
+            else
+                return base.Check(c);
         }
         override protected void Save(Client c)
         {

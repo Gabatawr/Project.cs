@@ -1,12 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using static Barber.Form1;
 
@@ -60,9 +56,12 @@ namespace Barber
             {
                 CurrentClientIndex--;
                 btnNext.Enabled = true;
-                if (CurrentClientIndex - 1 < 0) btnPrev.Enabled = false;
+                if (CurrentClientIndex - 1 < 0)
+                    btnPrev.Enabled = false;
                 ShowClient();
-            } else btnPrev.Enabled = false;
+            }
+            else
+                btnPrev.Enabled = false;
         }
         private void btnNext_Click(object sender, EventArgs e)
         {
@@ -70,10 +69,12 @@ namespace Barber
             {
                 CurrentClientIndex++;
                 btnPrev.Enabled = true;
-                if (CurrentClientIndex + 1 == Clients.Count()) btnNext.Enabled = false;
+                if (CurrentClientIndex + 1 == Clients.Count())
+                    btnNext.Enabled = false;
                 ShowClient();
             }
-            else btnNext.Enabled = false;
+            else
+                btnNext.Enabled = false;
         }
         //---------------------------------------------------------------------
         public List<Client> Clients;

@@ -1,19 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Barber
 {
     public partial class GendersForm : Form
     {
-        public GendersForm() {  InitializeComponent(); }
+        public GendersForm() { InitializeComponent(); }
         private void btnClose_Click(object sender, EventArgs e) => Close();
         //---------------------------------------------------------------------
         public SqlConnection Connection { get; private set; }

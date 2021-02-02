@@ -1,12 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Microsoft.Extensions.Configuration;
 
@@ -46,8 +42,8 @@ namespace Barber
                 DatabaseTitle.BackColor = Connection.State switch
                 {
                     ConnectionState.Connecting => Color.FromArgb(255, 0, 0, 255),
-                    ConnectionState.Open =>       Color.FromArgb(255, 0, 255, 0),
-                    ConnectionState.Closed =>     Color.FromArgb(255, 255, 0, 0),
+                    ConnectionState.Open => Color.FromArgb(255, 0, 255, 0),
+                    ConnectionState.Closed => Color.FromArgb(255, 255, 0, 0),
 
                     //ConnectionState.Executing => colorExecuting,
                     //ConnectionState.Fetching => colorFetching,
@@ -57,7 +53,7 @@ namespace Barber
                 };
             };
             #endregion StateChange
-            
+
             Connection.Open();
             DatabaseTitle.Text = Connection.Database.Substring((Connection.Database.LastIndexOf('\\') + 1), Connection.Database.Length - Connection.Database.LastIndexOf('\\') - 1);
 
