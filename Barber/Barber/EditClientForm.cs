@@ -17,8 +17,8 @@ namespace Barber
         {
             Base_Load();
 
-            currentClient = client.Clients[client.CurrentClientIndex];
-            cbGender.Text = (client.Owner as Form1).Genders
+            currentClient = clientForm.Clients[clientForm.CurrentClientIndex];
+            cbGender.Text = (clientForm.Owner as Form1).Genders
                 .Where<Gender>(g => g.Id == currentClient.GenderId)
                 .First().Name;
 
@@ -32,7 +32,7 @@ namespace Barber
         override protected void Save(Client c)
         {
             SqlCommand cmd = new($"update [Clients] set SurName = N'{c.SurName}', Name = N'{c.Name}', SecName = N'{c.SecName}', GenderId = {c.GenderId}, Phone = N'{c.Phone}', Email = N'{c.Email}' where Id = {currentClient.Id}",
-                                 client.Connection
+                                 clientForm.Connection
             );
             cmd.ExecuteNonQuery();
 

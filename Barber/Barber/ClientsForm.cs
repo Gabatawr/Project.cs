@@ -7,7 +7,7 @@ namespace Barber
 {
     public partial class ClientsForm : Form
     {
-        public ClientsForm() { InitializeComponent(); }
+        public ClientsForm() => InitializeComponent();
         private void btnClose_Click(object sender, EventArgs e) => Close();
         //---------------------------------------------------------------------
         public SqlConnection Connection { get; private set; }

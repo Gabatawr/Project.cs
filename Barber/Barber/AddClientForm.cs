@@ -9,7 +9,7 @@ namespace Barber
 {
     public partial class AddClientForm : Form
     {
-        protected ClientForm client;
+        protected ClientForm clientForm;
         //---------------------------------------------------------------------
         virtual protected void FormLoadHandler() => Load += AddClientForm_Load;
         public AddClientForm(string title = "AddClientForm")
@@ -28,11 +28,11 @@ namespace Barber
         //---------------------------------------------------------------------
         protected void Base_Load()
         {
-            client = Owner as ClientForm;
+            clientForm = Owner as ClientForm;
 
             cbGender.AutoCompleteSource = AutoCompleteSource.ListItems;
             cbGender.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
-            cbGender.Items.AddRange((client.Owner as Form1).Genders
+            cbGender.Items.AddRange((clientForm.Owner as Form1).Genders
                 .Select<Gender, string>(g => g.Name)
                 .ToArray());
         }
@@ -41,7 +41,10 @@ namespace Barber
         protected bool Check(Client c)
         {
             if (cbGender.Items.Contains(cbGender.Text))
-                c.GenderId = (client.Owner as Form1).Genders.Where<Gender>(g => g.Name == cbGender.Text).Select<Gender, int>(g => g.Id).First();
+                c.GenderId = (clientForm.Owner as Form1).Genders
+                    .Where<Gender>(g => g.Name == cbGender.Text)
+                    .Select<Gender, int>(g => g.Id)
+                    .First();
             else
             {
                 MessageBox.Show("Incorrect Gender!");
@@ -93,15 +96,15 @@ namespace Barber
         virtual protected void Save(Client c)
         {
             SqlCommand cmd = new($"insert into [Clients] (SurName, Name, SecName, GenderId, Phone, Email) values (N'{c.SurName}', N'{c.Name}', N'{c.SecName}', {c.GenderId}, N'{c.Phone}', N'{c.Email}')",
-                                 client.Connection
+                                 clientForm.Connection
             );
             cmd.ExecuteNonQuery();
 
             cmd.CommandText = $"select max(Id) from [Clients]";
             c.Id = (int)cmd.ExecuteScalar();
-            client.Clients.Add(c);
+            clientForm.Clients.Add(c);
 
-            client.CurrentClientIndex = client.Clients.Count - 1;
+            clientForm.CurrentClientIndex = clientForm.Clients.Count - 1;
         }
         protected void btnSave_Click(object sender, EventArgs e)
         {

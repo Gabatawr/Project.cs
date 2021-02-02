@@ -10,7 +10,7 @@ namespace Barber
 {
     public partial class Form1 : Form
     {
-        public Form1() { InitializeComponent(); }
+        public Form1() => InitializeComponent();
         //---------------------------------------------------------------------
         private SqlConnection TryConnection()
         {
@@ -35,8 +35,6 @@ namespace Barber
         private void Form1_Load(object sender, EventArgs e)
         {
             Connection = TryConnection();
-
-            #region StateChange
             Connection.StateChange += (s, e) =>
             {
                 DatabaseTitle.BackColor = Connection.State switch
@@ -52,9 +50,8 @@ namespace Barber
                     _ => Color.FromArgb(255, 128, 128, 128)
                 };
             };
-            #endregion StateChange
-
             Connection.Open();
+
             DatabaseTitle.Text = Connection.Database.Substring((Connection.Database.LastIndexOf('\\') + 1), Connection.Database.Length - Connection.Database.LastIndexOf('\\') - 1);
 
             SqlCommand cmd = new(@"select Id, Name, Description from [Gender]", Connection);

@@ -7,7 +7,7 @@ namespace Barber
 {
     public partial class GendersForm : Form
     {
-        public GendersForm() { InitializeComponent(); }
+        public GendersForm() => InitializeComponent();
         private void btnClose_Click(object sender, EventArgs e) => Close();
         //---------------------------------------------------------------------
         public SqlConnection Connection { get; private set; }

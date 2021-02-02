@@ -7,7 +7,7 @@ namespace Barber
 {
     public partial class BarbersForm : Form
     {
-        public BarbersForm() { InitializeComponent(); }
+        public BarbersForm() => InitializeComponent();
         private void btnClose_Click(object sender, EventArgs e) => Close();
         //---------------------------------------------------------------------
         public SqlConnection Connection { get; private set; }
@@ -40,7 +40,7 @@ namespace Barber
                 Adapter.Update(Dataset);
                 MessageBox.Show("Saved");
             }
-            catch (Exception ex) { MessageBox.Show("OMG!"); }
+            catch (Exception) { MessageBox.Show("OMG!"); }
         }
     }
 }

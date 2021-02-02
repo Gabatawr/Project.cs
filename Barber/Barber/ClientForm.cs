@@ -10,7 +10,7 @@ namespace Barber
 {
     public partial class ClientForm : Form
     {
-        public ClientForm() { InitializeComponent(); }
+        public ClientForm() => InitializeComponent();
         private void btnClose_Click(object sender, EventArgs e) => Close();
         //---------------------------------------------------------------------
         public SqlConnection Connection { get; private set; }
@@ -85,32 +85,34 @@ namespace Barber
             Client c = Clients[CurrentClientIndex];
 
             lbId.Text = c.Id.ToString();
+
             lbSurName.Text = c.SurName;
             lbName.Text = c.Name;
             lbSecName.Text = c.SecName;
+
             lbGender.Text = c.GenderId.ToString();
-            lbGenderName.Text = (Owner as Form1).Genders.Where<Gender>(g => g.Id == c.GenderId).First().Name;
-            toolTip1.SetToolTip(lbGenderName, (Owner as Form1).Genders.Where<Gender>(g => g.Id == c.GenderId).First().Description);
+            lbGenderName.Text = (Owner as Form1).Genders
+                .Where<Gender>(g => g.Id == c.GenderId)
+                .First().Name;
+            toolTip1.SetToolTip(lbGenderName, (Owner as Form1).Genders
+                .Where<Gender>(g => g.Id == c.GenderId)
+                .First().Description);
+
             lbPhone.Text = c.Phone;
             lbEmail.Text = c.Email;
         }
         //----------------------------------------------------------------------
-        private void btnAdd_Click(object sender, EventArgs e)
+        private enum TypeForm { Add, Edit }
+        private void OpenForm(TypeForm type)
         {
-            AddClientForm addClient = new();
-            addClient.ShowDialog(this);
+            Form operationForm = type == TypeForm.Add ? new AddClientForm() : new EditClientForm();
+            operationForm.ShowDialog(this);
 
             ShowClient();
             lbCount.Text = Clients.Count.ToString();
         }
-        private void btnEdit_Click(object sender, EventArgs e)
-        {
-            EditClientForm editClient = new();
-            editClient.ShowDialog(this);
-
-            ShowClient();
-            lbCount.Text = Clients.Count.ToString();
-        }
+        private void btnAdd_Click(object sender, EventArgs e) => OpenForm(TypeForm.Add);
+        private void btnEdit_Click(object sender, EventArgs e) => OpenForm(TypeForm.Edit);
         //----------------------------------------------------------------------
     }
     public class Client
