@@ -9,10 +9,9 @@ namespace Barber
 {
     public partial class AddClientForm : Form
     {
-        virtual protected void FormLoadHandler()
-        {
-            Load += AddClientForm_Load;
-        }
+        protected ClientForm client;
+        //---------------------------------------------------------------------
+        virtual protected void FormLoadHandler() => Load += AddClientForm_Load;
         public AddClientForm(string title = "AddClientForm")
         {
             InitializeComponent();
@@ -27,19 +26,17 @@ namespace Barber
         }
         protected void btnClose_Click(object sender, EventArgs e) => Close();
         //---------------------------------------------------------------------
-        protected ClientForm client;
         protected void Base_Load()
         {
             client = Owner as ClientForm;
 
             cbGender.AutoCompleteSource = AutoCompleteSource.ListItems;
             cbGender.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
-            cbGender.Items.AddRange((client.Owner as Form1).Genders.Select<Gender, string>(g => g.Name).ToArray());
+            cbGender.Items.AddRange((client.Owner as Form1).Genders
+                .Select<Gender, string>(g => g.Name)
+                .ToArray());
         }
-        private void AddClientForm_Load(object sender, EventArgs e)
-        {
-            Base_Load();
-        }
+        private void AddClientForm_Load(object sender, EventArgs e) => Base_Load();
         //---------------------------------------------------------------------
         virtual protected bool Check(Client c)
         {
@@ -99,7 +96,7 @@ namespace Barber
                                  client.Connection
             );
             cmd.ExecuteNonQuery();
-            //---------------------------------------------------------------------
+
             cmd.CommandText = $"select max(Id) from [Clients]";
             c.Id = (int)cmd.ExecuteScalar();
             client.Clients.Add(c);
