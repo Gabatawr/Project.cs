@@ -9,7 +9,6 @@ namespace Barber
     public sealed class EditClientForm : AddClientForm
     {
         private Client currentClient;
-        private string oldGender;
         //---------------------------------------------------------------------
         override protected void FormLoadHandler() => Load += EditClientForm_Load;
         public EditClientForm() : base("EditClientForm") {}
@@ -19,7 +18,7 @@ namespace Barber
             Base_Load();
 
             currentClient = client.Clients[client.CurrentClientIndex];
-            cbGender.Text = oldGender = (client.Owner as Form1).Genders
+            cbGender.Text = (client.Owner as Form1).Genders
                 .Where<Gender>(g => g.Id == currentClient.GenderId)
                 .First().Name;
 
@@ -30,18 +29,6 @@ namespace Barber
             tbEmail.Text = currentClient.Email;
         }
         //---------------------------------------------------------------------
-        override protected bool Check(Client c)
-        {
-            bool isEqual = tbSurName.Text == currentClient.SurName
-                           && tbName.Text == currentClient.Name
-                           && tbSecName.Text == currentClient.SecName
-                           && cbGender.Text == oldGender
-                           && tbPhone.Text == currentClient.Phone
-                           && tbEmail.Text == currentClient.Email;
-
-            if (isEqual) return false;
-            else return base.Check(c);
-        }
         override protected void Save(Client c)
         {
             SqlCommand cmd = new($"update [Clients] set SurName = N'{c.SurName}', Name = N'{c.Name}', SecName = N'{c.SecName}', GenderId = {c.GenderId}, Phone = N'{c.Phone}', Email = N'{c.Email}' where Id = {currentClient.Id}",

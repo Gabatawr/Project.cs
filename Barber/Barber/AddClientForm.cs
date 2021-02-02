@@ -38,7 +38,7 @@ namespace Barber
         }
         private void AddClientForm_Load(object sender, EventArgs e) => Base_Load();
         //---------------------------------------------------------------------
-        virtual protected bool Check(Client c)
+        protected bool Check(Client c)
         {
             if (cbGender.Items.Contains(cbGender.Text))
                 c.GenderId = (client.Owner as Form1).Genders.Where<Gender>(g => g.Name == cbGender.Text).Select<Gender, int>(g => g.Id).First();
