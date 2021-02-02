@@ -8,6 +8,7 @@ namespace Barber
 {
     public sealed class EditClientForm : AddClientForm
     {
+        private Client currentClient;
         private string oldGender;
         //---------------------------------------------------------------------
         override protected void FormLoadHandler() => Load += EditClientForm_Load;
@@ -17,42 +18,43 @@ namespace Barber
         {
             Base_Load();
 
+            currentClient = client.Clients[client.CurrentClientIndex];
             cbGender.Text = oldGender = (client.Owner as Form1).Genders
-                .Where<Gender>(g => g.Id == client.Clients[client.CurrentClientIndex].GenderId)
+                .Where<Gender>(g => g.Id == currentClient.GenderId)
                 .First().Name;
 
-            tbSurName.Text = client.Clients[client.CurrentClientIndex].SurName;
-            tbName.Text = client.Clients[client.CurrentClientIndex].Name;
-            tbSecName.Text = client.Clients[client.CurrentClientIndex].SecName;
-            tbPhone.Text = client.Clients[client.CurrentClientIndex].Phone;
-            tbEmail.Text = client.Clients[client.CurrentClientIndex].Email;
+            tbSurName.Text = currentClient.SurName;
+            tbName.Text = currentClient.Name;
+            tbSecName.Text = currentClient.SecName;
+            tbPhone.Text = currentClient.Phone;
+            tbEmail.Text = currentClient.Email;
         }
         //---------------------------------------------------------------------
         override protected bool Check(Client c)
         {
-            bool isEqual = tbSurName.Text == client.Clients[client.CurrentClientIndex].SurName
-                           && tbName.Text == client.Clients[client.CurrentClientIndex].Name
-                           && tbSecName.Text == client.Clients[client.CurrentClientIndex].SecName
+            bool isEqual = tbSurName.Text == currentClient.SurName
+                           && tbName.Text == currentClient.Name
+                           && tbSecName.Text == currentClient.SecName
                            && cbGender.Text == oldGender
-                           && tbPhone.Text == client.Clients[client.CurrentClientIndex].Phone
-                           && tbEmail.Text == client.Clients[client.CurrentClientIndex].Email;
+                           && tbPhone.Text == currentClient.Phone
+                           && tbEmail.Text == currentClient.Email;
 
             if (isEqual) return false;
             else return base.Check(c);
         }
         override protected void Save(Client c)
         {
-            SqlCommand cmd = new($"update [Clients] set SurName = N'{c.SurName}', Name = N'{c.Name}', SecName = N'{c.SecName}', GenderId = {c.GenderId}, Phone = N'{c.Phone}', Email = N'{c.Email}' where Id = {client.Clients[client.CurrentClientIndex].Id}",
+            SqlCommand cmd = new($"update [Clients] set SurName = N'{c.SurName}', Name = N'{c.Name}', SecName = N'{c.SecName}', GenderId = {c.GenderId}, Phone = N'{c.Phone}', Email = N'{c.Email}' where Id = {currentClient.Id}",
                                  client.Connection
             );
             cmd.ExecuteNonQuery();
 
-            client.Clients[client.CurrentClientIndex].SurName = c.SurName;
-            client.Clients[client.CurrentClientIndex].Name = c.Name;
-            client.Clients[client.CurrentClientIndex].SecName = c.SecName;
-            client.Clients[client.CurrentClientIndex].GenderId = c.GenderId;
-            client.Clients[client.CurrentClientIndex].Phone = c.Phone;
-            client.Clients[client.CurrentClientIndex].Email = c.Email;
+            currentClient.SurName = c.SurName;
+            currentClient.Name = c.Name;
+            currentClient.SecName = c.SecName;
+            currentClient.GenderId = c.GenderId;
+            currentClient.Phone = c.Phone;
+            currentClient.Email = c.Email;
         }
     }
 }
