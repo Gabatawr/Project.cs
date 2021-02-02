@@ -23,7 +23,6 @@ namespace Barber
             SqlCommandBuilder cmds = new(Adapter);
 
             Dataset = new();
-
             Adapter.Fill(Dataset);
 
             DataTable table = Dataset.Tables[0];

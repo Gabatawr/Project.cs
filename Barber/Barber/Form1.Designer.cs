@@ -22,6 +22,7 @@ namespace Barber
             this.btnBarbers = new System.Windows.Forms.Button();
             this.btnClients = new System.Windows.Forms.Button();
             this.btnClient = new System.Windows.Forms.Button();
+            this.btnLINQ = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // DatabaseTitle
@@ -73,11 +74,22 @@ namespace Barber
             this.btnClient.UseVisualStyleBackColor = true;
             this.btnClient.Click += new System.EventHandler(this.btnClient_Click);
             // 
+            // btnLINQ
+            // 
+            this.btnLINQ.Location = new System.Drawing.Point(13, 135);
+            this.btnLINQ.Name = "btnLINQ";
+            this.btnLINQ.Size = new System.Drawing.Size(144, 23);
+            this.btnLINQ.TabIndex = 5;
+            this.btnLINQ.Text = "LINQ";
+            this.btnLINQ.UseVisualStyleBackColor = true;
+            this.btnLINQ.Click += new System.EventHandler(this.btnLINQ_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(171, 137);
+            this.ClientSize = new System.Drawing.Size(171, 172);
+            this.Controls.Add(this.btnLINQ);
             this.Controls.Add(this.btnClient);
             this.Controls.Add(this.btnClients);
             this.Controls.Add(this.btnBarbers);
@@ -98,6 +110,7 @@ namespace Barber
         private System.Windows.Forms.Button btnBarbers;
         private System.Windows.Forms.Button btnClients;
         private System.Windows.Forms.Button btnClient;
+        private System.Windows.Forms.Button btnLINQ;
     }
 }
 

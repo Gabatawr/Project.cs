@@ -105,8 +105,8 @@ namespace Barber
         private enum TypeForm { Add, Edit }
         private void OpenForm(TypeForm type)
         {
-            Form operationForm = type == TypeForm.Add ? new AddClientForm() : new EditClientForm();
-            operationForm.ShowDialog(this);
+            Form form = (type == TypeForm.Add ? new AddClientForm() : new EditClientForm());
+            form.ShowDialog(this);
 
             ShowClient();
             lbCount.Text = Clients.Count.ToString();

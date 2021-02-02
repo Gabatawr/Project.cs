@@ -90,6 +90,11 @@ namespace Barber
             ClientForm client = new();
             client.ShowDialog(this);
         }
+        private void btnLINQ_Click(object sender, EventArgs e)
+        {
+            JournalForm journal = new();
+            journal.ShowDialog(this);
+        }
         //---------------------------------------------------------------------
         public List<Gender> Genders;
         public class Gender
