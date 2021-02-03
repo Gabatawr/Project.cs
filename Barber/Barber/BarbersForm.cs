@@ -43,4 +43,14 @@ namespace Barber
             catch (Exception) { MessageBox.Show("OMG!"); }
         }
     }
+    public class Barber
+    {
+        public int Id { get; set; }
+        public string SurName { get; set; }
+        public string Name { get; set; }
+        public string SecName { get; set; }
+        public int GenderId { get; set; }
+        public DateTime DateBirth { get; set; }
+        public DateTime EmploymentDate { get; set; }
+    }
 }
