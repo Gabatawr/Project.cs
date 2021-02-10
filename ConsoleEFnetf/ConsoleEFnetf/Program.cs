@@ -41,6 +41,14 @@ namespace ConsoleEFnetf
     class Program
     {
         static Random rand = new Random();
+        static int EnterInt(string h)
+        {
+            Console.WriteLine(new string('-', 64));
+            Console.Write(h + ": ");
+
+            return Convert.ToInt32(Console.ReadLine());
+        }
+
         static void Main()
         {
             //-----------------------------------------------------------------
@@ -54,20 +62,78 @@ namespace ConsoleEFnetf
             //db.SaveChanges();
             //-----------------------------------------------------------------
 
-            foreach (var s in db.Students)
+            //-------------------------------------------
+            int top = EnterInt("Top");
+            //-------------------------------------------
+            var q = from j in db.Journal
+                    join s in db.Students on j.StudentId equals s.Id
+                    join d in db.Disciplines on j.DisciplineId equals d.Id
+                    select new { j,s,d };
+            PrintTake();
+            //-------------------------------------------
+            int jId = EnterInt("JId");
+
+            Journal jItem = db.Journal.Find(jId);
+            if (jItem == null)
+                Console.WriteLine("Not found");
+            else
             {
-                Console.WriteLine($"{s.Id}".PadLeft(3, '0') + " - " + s.Name);
+                db.Journal.Remove(jItem);
+                db.SaveChanges();
+
+                PrintTake();
             }
+            //-------------------------------------------
+            int sId = EnterInt("SId");
+
+            Student sItem = db.Students.Find(sId);
+            if (sItem == null) Console.WriteLine("Not found");
+            else
+            {
+                Console.Write("New name: ");
+                sItem.Name = Console.ReadLine();
+                db.SaveChanges();
+
+                PrintWhere();
+            }
+            //-------------------------------------------
 
             //-----------------------------------------------------------------
-            Console.WriteLine("----------------");
+            Console.WriteLine(new string('-', 64));
             Console.WriteLine($"Students: {db.Students.Count()}");
             Console.WriteLine($"Disciplines: {db.Disciplines.Count()}");
             Console.WriteLine($"Journal: {db.Journal.Count()}");
             //-----------------------------------------------------------------
 
+            //-----------------------------------------------------------------
             db.Dispose();
             Console.ReadKey();
+            //-----------------------------------------------------------------
+
+            //-------------------------------------------
+            void Print(dynamic a)
+            {
+                Console.WriteLine("JId [" + $"{a.j.Id}".PadLeft(5, '0') + "]".PadRight(8)
+                                    + "SId [" + $"{a.s.Id}".PadLeft(3, '0') + "]".PadRight(8)
+                                    + $"{a.s.Name}".PadRight(12)
+                                    + $"{a.d.Title}".PadRight(24)
+                                    + $"{a.j.Rating}".PadLeft(2, '0'));
+            }
+            //-------------------------------------------
+            void PrintTake()
+            {
+                Console.WriteLine();
+                foreach (var a in q.Take(top))
+                    Print(a);
+            }
+            //-------------------------------------------
+            void PrintWhere()
+            {
+                Console.WriteLine();
+                foreach (var a in q.Where(a => a.s.Id == sId))
+                    Print(a);
+            }
+            //-------------------------------------------
         }
     }
 }
