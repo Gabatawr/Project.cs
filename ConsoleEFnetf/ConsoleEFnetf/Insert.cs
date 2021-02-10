@@ -9,6 +9,11 @@ namespace ConsoleEFnetf
 {
     public static class Insert
     {
+        /// <summary>
+        /// Add random names in table Students
+        /// </summary>
+        /// <param name="db">DbContext</param>
+        /// <param name="count">Count</param>
         public static void AddStudents(Academy db, int count)
         {
             SqlConnection connection = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;Initial Catalog=RandomDB;Integrated Security=True;");
@@ -25,7 +30,10 @@ namespace ConsoleEFnetf
 
             connection.Close();
         }
-
+        /// <summary>
+        /// Add disciplines in table Disciplines (Not random!)
+        /// </summary>
+        /// <param name="db">DbContext</param>
         public static void AddDisciplines(Academy db)
         {
             var dList = new string[]
