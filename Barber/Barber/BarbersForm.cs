@@ -52,5 +52,10 @@ namespace Barber
         public int GenderId { get; set; }
         public DateTime DateBirth { get; set; }
         public DateTime EmploymentDate { get; set; }
+
+        public override string ToString()
+        {
+            return string.Join(' ', SurName, Name, SecName);
+        }
     }
 }
