@@ -43,33 +43,30 @@ namespace ConsoleEFnetf
         static Random rand = new Random();
         static void Main()
         {
+            //-----------------------------------------------------------------
             Academy db = new Academy("DefaultConnection");
-
-            //-----------------------------------------------------------------
-            Insert.AddStudents(db, 50);
-            Insert.AddDisciplines(db);
-            db.SaveChanges();
             //-----------------------------------------------------------------
 
-            //var sList = db.Students.ToList();
-            //var dList = db.Disciplines.ToList();
-
-            //for (int i = 0; i < 10; i++)
-            //{
-            //    db.Journal.Add(new Journal()
-            //    {
-            //        StudentId = sList[rand.Next(sList.Count)].Id,
-            //        DisciplineId = dList[rand.Next(dList.Count)].Id,
-            //        Rating = rand.Next(5, 12),
-            //        Moment = DateTime.Now.AddDays(rand.Next(7))
-            //    });
-            //}
+            //-----------------------------------------------------------------
+            //Insert.AddStudents(db, 50);
+            //Insert.AddDisciplines(db);
+            //Insert.AddJournal(db, 10000, 5, 12);
             //db.SaveChanges();
+            //-----------------------------------------------------------------
 
+            foreach (var s in db.Students)
+            {
+                Console.WriteLine($"{s.Id}".PadLeft(3, '0') + " - " + s.Name);
+            }
+
+            //-----------------------------------------------------------------
+            Console.WriteLine("----------------");
             Console.WriteLine($"Students: {db.Students.Count()}");
             Console.WriteLine($"Disciplines: {db.Disciplines.Count()}");
             Console.WriteLine($"Journal: {db.Journal.Count()}");
+            //-----------------------------------------------------------------
 
+            db.Dispose();
             Console.ReadKey();
         }
     }
