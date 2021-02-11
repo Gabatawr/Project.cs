@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Data;
 using System.Data.SqlClient;
+using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using static Barber.Form1;
@@ -32,10 +33,42 @@ namespace Barber
 
             cbGender.AutoCompleteSource = AutoCompleteSource.ListItems;
             cbGender.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
-            cbGender.Items.AddRange((clientForm.Owner as Form1).Genders
-                .Select<Gender, string>(g => g.Name)
-                .ToArray());
+            cbGender.Items.AddRange
+            (
+                (clientForm.Owner as Form1).Genders
+                                           .Select(g => g.Name)
+                                           .ToArray()
+            );
+            
+            cbGender.DrawMode = DrawMode.OwnerDrawFixed;
+            cbGender.DrawItem += cbGender_DrawItem;
+            cbGender.DropDownClosed += cbGender_DropDownClosed;
         }
+        //---------------------------------------------------------------------
+        private ToolTip ttGenderDescription = new ToolTip();
+        private void cbGender_DropDownClosed(object sender, EventArgs e)
+            => ttGenderDescription.Hide(cbGender);
+        private void cbGender_DrawItem(object sender, DrawItemEventArgs e)
+        {
+            if (e.Index < 0) return;
+
+            string text = cbGender.Items[e.Index].ToString();
+            string hint = (clientForm.Owner as Form1).Genders
+                                                     .Where(g => g.Name == text)
+                                                     .Select(g => g.Description)
+                                                     .First();
+            
+            e.DrawBackground();
+            {
+                using (SolidBrush br = new SolidBrush(e.ForeColor))
+                    e.Graphics.DrawString(text, e.Font, br, e.Bounds);
+
+                if ((e.State & DrawItemState.Selected) == DrawItemState.Selected)
+                    ttGenderDescription.Show(hint, cbGender, e.Bounds.Right, e.Bounds.Bottom);
+            }
+            e.DrawFocusRectangle();
+        }
+        //---------------------------------------------------------------------
         private void AddClientForm_Load(object sender, EventArgs e) => Base_Load();
         //---------------------------------------------------------------------
         protected bool Check(Client c)
