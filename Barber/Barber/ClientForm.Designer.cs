@@ -282,6 +282,7 @@ namespace Barber
             this.btnDel.TabIndex = 7;
             this.btnDel.Text = "Del";
             this.btnDel.UseVisualStyleBackColor = true;
+            this.btnDel.Click += new System.EventHandler(this.btnDel_Click);
             // 
             // btnEdit
             // 

@@ -50,6 +50,9 @@ namespace Barber
             }
         }
         //---------------------------------------------------------------------
+        public List<Client> Clients;
+        public int CurrentClientIndex;
+        //---------------------------------------------------------------------
         private void bntPrev_Click(object sender, EventArgs e)
         {
             if (CurrentClientIndex - 1 >= 0)
@@ -77,9 +80,6 @@ namespace Barber
                 btnNext.Enabled = false;
         }
         //---------------------------------------------------------------------
-        public List<Client> Clients;
-        public int CurrentClientIndex;
-        //---------------------------------------------------------------------
         public void ShowClient()
         {
             Client c = Clients[CurrentClientIndex];
@@ -92,11 +92,11 @@ namespace Barber
 
             lbGender.Text = c.GenderId.ToString();
             lbGenderName.Text = (Owner as Form1).Genders
-                .Where<Gender>(g => g.Id == c.GenderId)
-                .First().Name;
+                .Where(g => g.Id == c.GenderId)
+                .FirstOrDefault()?.Name ?? "Invalid gender!";
             toolTip1.SetToolTip(lbGenderName, (Owner as Form1).Genders
-                .Where<Gender>(g => g.Id == c.GenderId)
-                .First().Description);
+                .Where(g => g.Id == c.GenderId)
+                .FirstOrDefault()?.Description ?? "Invalid gender!");
 
             lbPhone.Text = c.Phone;
             lbEmail.Text = c.Email;
@@ -113,6 +113,27 @@ namespace Barber
         }
         private void btnAdd_Click(object sender, EventArgs e) => OpenForm(TypeForm.Add);
         private void btnEdit_Click(object sender, EventArgs e) => OpenForm(TypeForm.Edit);
+        private void btnDel_Click(object sender, EventArgs e)
+        {
+            string msg = "Delete clietn: "
+                         + Clients[CurrentClientIndex].SurName + ' '
+                         + Clients[CurrentClientIndex].Name + ' '
+                         + Clients[CurrentClientIndex].SecName + '?';
+
+            if (MessageBox.Show(msg) == DialogResult.OK)
+            {
+                SqlCommand cmd = new($"delete from [Clients] where Id = {Clients[CurrentClientIndex].Id}",
+                                 Connection
+                );
+                cmd.ExecuteNonQuery();
+
+                bool last = CurrentClientIndex == Clients.Count - 1;
+                Clients.Remove(Clients[CurrentClientIndex]);
+                if (last)  CurrentClientIndex--;
+
+                ShowClient();
+            }
+        }
         //----------------------------------------------------------------------
     }
     public class Client
