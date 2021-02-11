@@ -57,7 +57,6 @@ namespace Barber
                                                      .Where(g => g.Name == text)
                                                      .Select(g => g.Description)
                                                      .First();
-            
             e.DrawBackground();
             {
                 using (SolidBrush br = new SolidBrush(e.ForeColor))

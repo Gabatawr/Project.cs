@@ -95,6 +95,11 @@ namespace Barber
             JournalForm journal = new();
             journal.ShowDialog(this);
         }
+        private void bntFeedback_Click(object sender, EventArgs e)
+        {
+            FeedbackForm feedback = new();
+            feedback.ShowDialog(this);
+        }
         //---------------------------------------------------------------------
         public List<Gender> Genders;
         public class Gender
