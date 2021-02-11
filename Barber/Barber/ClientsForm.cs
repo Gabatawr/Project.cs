@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Data;
 using System.Data.SqlClient;
+using System.Text;
 using System.Windows.Forms;
 
 namespace Barber
@@ -30,6 +31,31 @@ namespace Barber
 
             dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.DisplayedCells;
             dataGridView1.DataSource = table;
+
+            ContextMenuStrip menu = new();
+            dataGridView1.ContextMenuStrip = menu;
+
+            menu.Items.Add("Delete");
+            menu.Items[0].Click += ClientsForm_Click;
+        }
+        //---------------------------------------------------------------------
+        private void ClientsForm_Click(object sender, EventArgs e)
+        {
+            StringBuilder sb = new();
+            foreach (DataGridViewRow item in dataGridView1.SelectedRows)
+            {
+                sb.Append("Delete: ");
+                sb.Append(item.Cells["SurName"].Value); sb.Append(' ');
+                sb.Append(item.Cells["Name"].Value);    sb.Append(' ');
+                sb.Append(item.Cells["SecName"].Value); sb.Append('?');
+                sb.AppendLine();
+            }
+
+            if (MessageBox.Show(sb.ToString()) == DialogResult.OK)
+            {
+                foreach (DataGridViewRow item in dataGridView1.SelectedRows)
+                    dataGridView1.Rows.Remove(item);
+            }
         }
         //---------------------------------------------------------------------
         private void bntSave_Click(object sender, EventArgs e)
