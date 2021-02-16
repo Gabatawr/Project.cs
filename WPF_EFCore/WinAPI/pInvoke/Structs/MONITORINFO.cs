@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
-namespace WPF_EFCore_1.Infrastructure.pInvoke.Structs
+namespace WinAPI.pInvoke.Structs
 {
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
     public class MONITORINFO

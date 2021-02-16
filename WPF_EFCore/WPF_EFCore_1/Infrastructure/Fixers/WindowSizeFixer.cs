@@ -2,8 +2,9 @@
 using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Interop;
-using WPF_EFCore_1.Infrastructure.pInvoke;
-using WPF_EFCore_1.Infrastructure.pInvoke.Structs;
+
+using WinAPI.pInvoke.Structs;
+using static WinAPI.pInvoke.User32;
 
 namespace WPF_EFCore_1.Infrastructure.Fixers
 {
@@ -33,11 +34,11 @@ namespace WPF_EFCore_1.Infrastructure.Fixers
         {
             MINMAXINFO mmi = (MINMAXINFO)Marshal.PtrToStructure(lParam, typeof(MINMAXINFO));
             {
-                IntPtr monitor = User32.MonitorFromWindow(hwnd);
+                IntPtr monitor = MonitorFromWindow(hwnd);
                 if (monitor != IntPtr.Zero)
                 {
                     MONITORINFO monitorInfo = new();
-                    User32.GetMonitorInfo(monitor, monitorInfo);
+                    GetMonitorInfo(monitor, monitorInfo);
 
                     mmi.ptMaxPosition.X = Math.Abs(monitorInfo.rcWork.left - monitorInfo.rcMonitor.left);
                     mmi.ptMaxPosition.Y = Math.Abs(monitorInfo.rcWork.top - monitorInfo.rcMonitor.top);

@@ -18,4 +18,8 @@
     <Folder Include="Models\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\WinAPI\WinAPI.csproj" />
+  </ItemGroup>
+
 </Project>

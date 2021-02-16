@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Runtime.InteropServices;
-using WPF_EFCore_1.Infrastructure.pInvoke.Structs;
+using WinAPI.pInvoke.Structs;
 
-namespace WPF_EFCore_1.Infrastructure.pInvoke
+namespace WinAPI.pInvoke
 {
-    internal static class User32
+    public static class User32
     {
         const string FileName = "user32";
         const int MONITOR_DEFAULTTONEAREST = 0x00000002;

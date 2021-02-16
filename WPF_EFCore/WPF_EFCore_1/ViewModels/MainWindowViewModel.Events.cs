@@ -13,10 +13,7 @@ namespace WPF_EFCore_1.ViewModels
 
         private Command _SourceInitializedEvent;
         public Command SourceInitializedEvent
-        {
-            get => _SourceInitializedEvent ??= new ActionCommand(exec => WindowSizeFixer.Fix());
-            set => _SourceInitializedEvent = value;
-        }
+            => _SourceInitializedEvent ??= new ActionCommand(exec => WindowSizeFixer.Fix());
 
         #endregion Event : SourceInitializedEvent
         //--------------------------------------------------------------------

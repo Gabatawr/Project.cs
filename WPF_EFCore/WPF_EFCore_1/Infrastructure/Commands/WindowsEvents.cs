@@ -6,7 +6,7 @@ namespace WPF_EFCore_1.Infrastructure.Commands
 {
     class WindowEvents
     {
-        #region SourceInitialized
+        #region SourceInitializedProperty
 
         public static readonly DependencyProperty SourceInitializedProperty = DependencyProperty.RegisterAttached
         (
@@ -15,13 +15,13 @@ namespace WPF_EFCore_1.Infrastructure.Commands
         );
         private static void SourceInitializedChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
             => ((Window)d).SourceInitialized += element_SourceInitialized;
+        public static ICommand GetSourceInitialized(UIElement element)
+            => (ICommand)element.GetValue(SourceInitializedProperty);
         static void element_SourceInitialized(object sender, EventArgs e)
             => GetSourceInitialized((Window)sender).Execute(e);
         public static void SetSourceInitialized(UIElement element, ICommand value)
             => element.SetValue(SourceInitializedProperty, value);
-        public static ICommand GetSourceInitialized(UIElement element)
-            => (ICommand)element.GetValue(SourceInitializedProperty);
 
-        #endregion
+        #endregion SourceInitializedProperty
     }
 }
