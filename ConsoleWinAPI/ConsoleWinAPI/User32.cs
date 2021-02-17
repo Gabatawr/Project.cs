@@ -11,20 +11,32 @@ namespace ConsoleWinAPI
 
         #region MessageBox
 
-        public sealed class MB_Buttons
+        public enum MB_Button : uint
         {
-            public const uint MB_ABORTRETRYIGNORE  = 0x00000002U;
-            public const uint MB_CANCELTRYCONTINUE = 0x00000006U;
-            public const uint MB_HELP              = 0x00004000U;
-            public const uint MB_OK                = 0x00000000U;
-            public const uint MB_OKCANCEL          = 0x00000001U;
-            public const uint MB_RETRYCANCEL       = 0x00000005U;
-            public const uint MB_YESNO             = 0x00000004U;
-            public const uint MB_YESNOCANCEL       = 0x00000003U;
+            MB_OK                = 0x00000000U,
+            MB_OKCANCEL          = 0x00000001U,
+            MB_ABORTRETRYIGNORE  = 0x00000002U,
+            MB_YESNOCANCEL       = 0x00000003U,
+            MB_YESNO             = 0x00000004U,
+            MB_RETRYCANCEL       = 0x00000005U,
+            MB_CANCELTRYCONTINUE = 0x00000006U,
+            MB_HELP              = 0x00004000U
+        }
+        public enum MB_RValue : int
+        {
+            IDOK       = 1,
+            IDCANCEL   = 2,
+            IDABORT    = 3,
+            IDRETRY    = 4,
+            IDIGNORE   = 5,
+            IDYES      = 6,
+            IDNO       = 7,
+            IDTRYAGAIN = 10,
+            IDCONTINUE = 11
         }
 
         [DllImport(FileName, SetLastError = true, CharSet = CharSet.Unicode)]
-        public static extern int MessageBox(IntPtr hWnd, String text, String caption, uint type = MB_Buttons.MB_OK);
+        public static extern MB_RValue MessageBox(IntPtr hWnd, String text, String caption, MB_Button type = MB_Button.MB_OK);
 
         #endregion MessageBox
 

@@ -8,7 +8,7 @@ namespace ConsoleWinAPI
     class Program
     {
         static void ShowMessageBox(string textDialog, string textHeader = "MessageBox")
-            => User32.MessageBox(new IntPtr(0), textDialog, textHeader, User32.MB_Buttons.MB_YESNOCANCEL);
+            => User32.MessageBox(new IntPtr(0), textDialog, textHeader, User32.MB_Button.MB_YESNOCANCEL);
 
         static void RunNotepad()
         {
@@ -42,8 +42,9 @@ namespace ConsoleWinAPI
         {
             //ShowMessageBox("Hello!");
             //RunNotepad();
+            //FindAndDestroyInstaller();
 
-            FindAndDestroyInstaller();
+            Homework.Task_1.Run();
 
             Console.ReadKey();
         }
