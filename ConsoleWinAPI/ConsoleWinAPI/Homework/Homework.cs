@@ -20,30 +20,17 @@ namespace ConsoleWinAPI.Homework
                 (@"https://github.com/Gabatawr", "GitHub")
             };
 
+            int i = 0;
+            User32.MB_RValue ret;
+            User32.MB_Button btns = User32.MB_Button.MB_CANCELTRYCONTINUE;
+
+            do 
             {
-                int i = -1;
-                bool loop = true;
-                User32.MB_RValue ret;
-                User32.MB_Button btns = User32.MB_Button.MB_CANCELTRYCONTINUE;
+                if (i == list.Count - 1) btns = User32.MB_Button.MB_OK;
+                ret = User32.MessageBox(new IntPtr(0), list[i].Item1, list[i].Item2, btns);
+                i += ret == User32.MB_RValue.IDTRYAGAIN ? 0 : 1;
 
-                do
-                {
-                    if (++i == list.Count - 1) btns = User32.MB_Button.MB_OK;
-
-                    ret = User32.MessageBox(new IntPtr(0), list[i].Item1, list[i].Item2, btns);
-
-                    if (ret == User32.MB_RValue.IDTRYAGAIN)
-                    {
-                        i--;
-                        continue;
-                    }
-
-                    loop = i < list.Count - 1
-                        && ret != User32.MB_RValue.IDCANCEL
-                        && ret != User32.MB_RValue.IDOK;
-
-                } while (loop);
-            }   
+            } while (ret != User32.MB_RValue.IDCANCEL && ret != User32.MB_RValue.IDOK);
         }
     }
 }
