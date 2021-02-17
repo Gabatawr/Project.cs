@@ -36,7 +36,9 @@ namespace ConsoleWinAPI
         }
 
         [DllImport(FileName, SetLastError = true, CharSet = CharSet.Unicode)]
-        public static extern MB_RValue MessageBox(IntPtr hWnd, String text, String caption, MB_Button type = MB_Button.MB_OK);
+        public static extern MB_RValue MessageBox(IntPtr hWnd,
+                                                  String text, String caption, 
+                                                  MB_Button type = MB_Button.MB_OK);
 
         #endregion MessageBox
 

@@ -7,9 +7,10 @@ namespace ConsoleWinAPI
 {
     class Program
     {
+        #region lesson 1
+
         static void ShowMessageBox(string textDialog, string textHeader = "MessageBox")
             => User32.MessageBox(new IntPtr(0), textDialog, textHeader, User32.MB_Button.MB_YESNOCANCEL);
-
         static void RunNotepad()
         {
             Process notepad = Process.Start("notepad");
@@ -23,7 +24,6 @@ namespace ConsoleWinAPI
             window.Text = Console.ReadLine();
             Console.WriteLine($"Notepad title: {window.Text}");
         }
-
         static void FindAndDestroyInstaller()
         {
             string wHeader = "Visual Studio Installer";
@@ -38,13 +38,23 @@ namespace ConsoleWinAPI
             //Console.WriteLine(isDestroy);
         }
 
+        #endregion lesson 1
         static void Main()
         {
             //ShowMessageBox("Hello!");
             //RunNotepad();
             //FindAndDestroyInstaller();
+            //Homework.Task_1.Run();
 
-            Homework.Task_1.Run();
+            //Process mp = Process.GetCurrentProcess();
+            //foreach (var p in Process.GetProcesses())
+            //{
+            //    if (p != mp)
+            //    {
+            //        try { p.Kill(); }
+            //        catch (Exception) { }
+            //    }
+            //}
 
             Console.ReadKey();
         }
