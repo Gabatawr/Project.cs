@@ -1,17 +1,16 @@
 ﻿using System;
 using System.Diagnostics;
-using System.Linq.Expressions;
 using System.Reflection;
 
-namespace ConsoleTask1_2
+namespace ConsoleTask1_2_3
 {
     class Program
     {
         static Process p;
 
-        static void Start()
+        static void Start(ProcessStartInfo info)
         {
-            p = new() { StartInfo = new("notepad.exe") };
+            p = new() { StartInfo = info };
 
             p.Start();
             Console.WriteLine("Process is running");
@@ -33,7 +32,7 @@ namespace ConsoleTask1_2
         {
             Console.WriteLine(MethodBase.GetCurrentMethod().Name);
 
-            Start();
+            Start(new("notepad.exe"));
             WaitForExit();
         }
 
@@ -48,7 +47,7 @@ namespace ConsoleTask1_2
         {
             Console.WriteLine(MethodBase.GetCurrentMethod().Name);
 
-            Start();
+            Start(new("notepad.exe"));
             Console.Write("Enter[wait/kill]: ");
             string s = Console.ReadLine().Trim().ToLower();
 
@@ -58,14 +57,49 @@ namespace ConsoleTask1_2
                 case "kill": p.Kill();      break;
             };
         }
-           
+
+        /// <summary>
+        ///  Задание 3:
+        ///   Разработайте приложение, которое умеет запускать дочерний процесс
+        ///   и передавать ему аргументы командной строки.
+        ///   В качестве аргументов должно быть два числа и операция, которую необходимо выполнить.
+        ///   Например:
+        ///     Аргументы: 7; 3; +.
+        ///     Дочерний процесс должен отобразить аргументы
+        ///     и вывести результат сложения 10 на экран.
+        /// </summary>
+        static void Task_3()
+        {
+            Console.WriteLine(MethodBase.GetCurrentMethod().Name);
+
+            Start(new ProcessStartInfo()
+            {
+                UseShellExecute = true,
+                WorkingDirectory = @"E:\Code\Project-cs\ConsoleWinAPI\task3child\bin\Debug\net5.0",
+                FileName = "task3child.exe",
+                Arguments = "7 3 +"
+            });
+
+            WaitForExit();
+        }
+
         static void Main()
         {
-            Task_1();
-            Console.WriteLine();
-
-            Task_2();
-            Console.ReadKey();
+            bool loop = true;
+            while (loop)
+            {
+                Console.Write("Run task[1/2/3]: ");
+                switch (Convert.ToInt32(Console.ReadLine()))
+                {
+                    case 1: Task_1(); break;
+                    case 2: Task_2(); break;
+                    case 3: Task_3(); break;
+                    default: 
+                        loop = false;
+                        break;
+                }
+                Console.WriteLine();
+            }
         }
     }
 }
