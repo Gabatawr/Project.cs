@@ -2,12 +2,13 @@
 using System.Diagnostics;
 using System.Reflection;
 
-namespace ConsoleTask1_2_3
+namespace ConsoleTask1_2_3_4
 {
     class Program
     {
+        //---------------------------------------------------------------------
         static Process p;
-
+        //---------------------------------------------------------------------
         static void Start(ProcessStartInfo info)
         {
             p = new() { StartInfo = info };
@@ -15,13 +16,33 @@ namespace ConsoleTask1_2_3
             p.Start();
             Console.WriteLine("Process is running");
         }
-
         static void WaitForExit()
         {
             Console.WriteLine("Waiting process exit..");
             p.WaitForExit();
             Console.WriteLine("Process completed: " + p.ExitCode);
         }
+        //---------------------------------------------------------------------
+        static void Main()
+        {
+            bool loop = true;
+            while (loop)
+            {
+                Console.Write("Run task[1/2/3/4]: ");
+                switch (Convert.ToInt32(Console.ReadLine()))
+                {
+                    case 1: Task_1(); break;
+                    case 2: Task_2(); break;
+                    case 3: Task_3(); break;
+                    case 4: Task_4(); break;
+                    default:
+                        loop = false;
+                        break;
+                }
+                Console.WriteLine();
+            }
+        }
+        //---------------------------------------------------------------------
 
         /// <summary>
         ///  Задание 1:
@@ -83,23 +104,29 @@ namespace ConsoleTask1_2_3
             WaitForExit();
         }
 
-        static void Main()
+        /// <summary>
+        ///  Задание 4:
+        ///   Разработайте приложение, которое умеет запускать дочерний процесс
+        ///   и передавать ему аргументы командной строки.
+        ///   В качестве аргументов должны быть путь к файлу и слово для поиска.
+        ///   Например:
+        ///     аргументы: E:\someFolder;  bicycle.
+        ///     Дочерний процесс должен отобразить количество раз,
+        ///     сколько слово bicycle встречается в файле.
+        /// </summary>
+        static void Task_4()
         {
-            bool loop = true;
-            while (loop)
+            Console.WriteLine(MethodBase.GetCurrentMethod().Name);
+
+            Start(new ProcessStartInfo()
             {
-                Console.Write("Run task[1/2/3]: ");
-                switch (Convert.ToInt32(Console.ReadLine()))
-                {
-                    case 1: Task_1(); break;
-                    case 2: Task_2(); break;
-                    case 3: Task_3(); break;
-                    default: 
-                        loop = false;
-                        break;
-                }
-                Console.WriteLine();
-            }
+                UseShellExecute = true,
+                WorkingDirectory = @"E:\Code\Project-cs\ConsoleWinAPI\task4child\bin\Debug\net5.0",
+                FileName = "task4child.exe",
+                Arguments = @"E:\Code\Project-cs\ConsoleWinAPI\task4child\bin\Debug\net5.0\parsefile.txt bicycle"
+            });
+            
+            WaitForExit();
         }
     }
 }
