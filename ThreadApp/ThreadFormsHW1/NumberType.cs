@@ -39,5 +39,22 @@ namespace ThreadFormsHW1
             _stopped = true;
         }
         //---------------------------------------------------------------------
+        public void Pause()
+        {
+            if (_thread != null && _thread.IsAlive)
+            {
+                try { _thread.Suspend(); }
+                catch (Exception) { }
+            }
+        }
+        public void Resume()
+        {
+            if (_thread != null && _thread.ThreadState == ThreadState.Suspended)
+            {
+                try { _thread.Resume(); }
+                catch (Exception) { }
+            }
+        }
+        //---------------------------------------------------------------------
     }
 }

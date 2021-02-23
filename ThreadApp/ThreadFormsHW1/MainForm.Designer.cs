@@ -215,6 +215,7 @@ namespace ThreadFormsHW1
             this.btnPrimePause.TabIndex = 1;
             this.btnPrimePause.Text = "Pause";
             this.btnPrimePause.UseVisualStyleBackColor = true;
+            this.btnPrimePause.Click += new System.EventHandler(this.btnPrimePause_Click);
             // 
             // btnPrimeResume
             // 
@@ -224,6 +225,7 @@ namespace ThreadFormsHW1
             this.btnPrimeResume.TabIndex = 1;
             this.btnPrimeResume.Text = "Resume";
             this.btnPrimeResume.UseVisualStyleBackColor = true;
+            this.btnPrimeResume.Click += new System.EventHandler(this.btnPrimeResume_Click);
             // 
             // btnPrimeStop
             // 
@@ -233,6 +235,7 @@ namespace ThreadFormsHW1
             this.btnPrimeStop.TabIndex = 1;
             this.btnPrimeStop.Text = "Stop";
             this.btnPrimeStop.UseVisualStyleBackColor = true;
+            this.btnPrimeStop.Click += new System.EventHandler(this.btnPrimeStop_Click);
             // 
             // gFibonacci
             // 
@@ -275,6 +278,7 @@ namespace ThreadFormsHW1
             this.btnFibonacciPause.TabIndex = 1;
             this.btnFibonacciPause.Text = "Pause";
             this.btnFibonacciPause.UseVisualStyleBackColor = true;
+            this.btnFibonacciPause.Click += new System.EventHandler(this.btnFibonacciPause_Click);
             // 
             // btnFibonacciResume
             // 
@@ -284,6 +288,7 @@ namespace ThreadFormsHW1
             this.btnFibonacciResume.TabIndex = 1;
             this.btnFibonacciResume.Text = "Resume";
             this.btnFibonacciResume.UseVisualStyleBackColor = true;
+            this.btnFibonacciResume.Click += new System.EventHandler(this.btnFibonacciResume_Click);
             // 
             // btnFibonacciStop
             // 
@@ -293,6 +298,7 @@ namespace ThreadFormsHW1
             this.btnFibonacciStop.TabIndex = 1;
             this.btnFibonacciStop.Text = "Stop";
             this.btnFibonacciStop.UseVisualStyleBackColor = true;
+            this.btnFibonacciStop.Click += new System.EventHandler(this.btnFibonacciStop_Click);
             // 
             // MainForm
             // 

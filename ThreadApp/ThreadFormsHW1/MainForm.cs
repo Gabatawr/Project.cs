@@ -89,6 +89,12 @@ namespace ThreadFormsHW1
 
             btnGo.Enabled = false;
             btnStop.Enabled = true;
+
+            btnPrimePause.Enabled = true;
+            btnPrimeStop.Enabled = true;
+
+            btnFibonacciPause.Enabled = true;
+            btnFibonacciStop.Enabled = true;
         }
 
         private void btnStop_Click(object sender, EventArgs e)
@@ -101,5 +107,75 @@ namespace ThreadFormsHW1
         }
         //---------------------------------------------------------------------
         #endregion Button Range
+
+        #region Button Prime
+        //---------------------------------------------------------------------
+        private void btnPrimePause_Click(object sender, EventArgs e)
+        {
+            foreach (var nt in numberType)
+                if (nt is Prime)
+                    nt.Pause();
+
+            btnPrimePause.Enabled = false;
+            btnPrimeResume.Enabled = true;
+        }
+        private void btnPrimeResume_Click(object sender, EventArgs e)
+        {
+            foreach (var nt in numberType)
+                if (nt is Prime)
+                    nt.Resume();
+
+            btnPrimePause.Enabled = true;
+            btnPrimeResume.Enabled = false;
+        }
+        private void btnPrimeStop_Click(object sender, EventArgs e)
+        {
+            foreach (var nt in numberType) 
+                if (nt is Prime) 
+                    nt.Stop();
+
+            
+            btnPrimePause.Enabled = false;
+            btnPrimeResume.Enabled = false;
+            btnPrimeStop.Enabled = false;
+        }
+
+        //---------------------------------------------------------------------
+        #endregion Button Prime
+
+        #region Button Fibonacci
+        //---------------------------------------------------------------------
+        private void btnFibonacciPause_Click(object sender, EventArgs e)
+        {
+            foreach (var nt in numberType)
+                if (nt is Fibonacci)
+                    nt.Pause();
+
+            btnFibonacciPause.Enabled = false;
+            btnFibonacciResume.Enabled = true;
+        }
+        private void btnFibonacciResume_Click(object sender, EventArgs e)
+        {
+            foreach (var nt in numberType)
+                if (nt is Fibonacci)
+                    nt.Resume();
+
+            btnFibonacciPause.Enabled = true;
+            btnFibonacciResume.Enabled = false;
+        }
+        private void btnFibonacciStop_Click(object sender, EventArgs e)
+        {
+            foreach (var nt in numberType)
+                if (nt is Fibonacci)
+                    nt.Stop();
+
+            btnFibonacciPause.Enabled = false;
+            btnFibonacciResume.Enabled = false;
+            btnFibonacciStop.Enabled = false;
+        }
+        //---------------------------------------------------------------------
+        #endregion Button Fibonacci
+
+        
     }
 }
