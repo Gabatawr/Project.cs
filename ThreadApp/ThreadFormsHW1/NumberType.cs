@@ -23,7 +23,7 @@ namespace ThreadFormsHW1
         //---------------------------------------------------------------------
         public void Start(object obj)
         {
-             _thread = new(_generate);
+            _thread = new(_generate);
             _thread.IsBackground = true;
             _thread.Start(obj);
 
