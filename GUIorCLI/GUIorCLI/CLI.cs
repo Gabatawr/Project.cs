@@ -13,10 +13,10 @@ namespace GUIorCLI
             {
                 int u;
                 Kernel32.GetWindowThreadProcessId(Kernel32.GetForegroundWindow(), out u);
-                process = Process.GetProcessById(u);
+                process =  Process.GetProcessById(u);
             }
 
-            if (string.Compare(process.ProcessName, "cmd", StringComparison.InvariantCultureIgnoreCase) == 0)
+            if (process.ProcessName == "cmd")
             {
                 Kernel32.AttachConsole(process.Id);
                 attached = true;
@@ -24,6 +24,7 @@ namespace GUIorCLI
             else
             {
                 Kernel32.AllocConsole();
+
                 Console.Title = "GUIorCLI";
                 Console.Clear();
             }
@@ -32,11 +33,7 @@ namespace GUIorCLI
             Console.ReadKey();
 
             Kernel32.FreeConsole();
-            if (attached)
-            {
-                var hWnd = process.MainWindowHandle;
-                Kernel32.PostMessage(hWnd, Kernel32.WM_KEYDOWN, Kernel32.VK_RETURN, 0);
-            }
+            if (attached) Kernel32.PostMessage(process.MainWindowHandle);
         }
     }
 }
