@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Diagnostics;
-using System.Threading;
 
 namespace GUIorCLI
 {
@@ -10,10 +9,12 @@ namespace GUIorCLI
         {
             bool attached = false;
 
-            IntPtr ptr = Kernel32.GetForegroundWindow();
-            int u;
-            Kernel32.GetWindowThreadProcessId(ptr, out u);
-            Process process = Process.GetProcessById(u);
+            Process process;
+            {
+                int u;
+                Kernel32.GetWindowThreadProcessId(Kernel32.GetForegroundWindow(), out u);
+                process = Process.GetProcessById(u);
+            }
 
             if (string.Compare(process.ProcessName, "cmd", StringComparison.InvariantCultureIgnoreCase) == 0)
             {
