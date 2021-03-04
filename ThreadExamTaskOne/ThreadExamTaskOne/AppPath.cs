@@ -7,7 +7,7 @@ namespace ThreadExamTaskOne
         static class AppPath
         {
             public static string App { get; }
-            public static string Search { get; }
+            public static string Search { get; set; }
             public static string FileStat { get; }
             public static string FileWords { get; }
             public static string FileExtensions { get; }

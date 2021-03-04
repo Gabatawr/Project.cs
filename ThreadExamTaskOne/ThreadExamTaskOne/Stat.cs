@@ -36,10 +36,14 @@ namespace ThreadExamTaskOne
 
             public static void SaveChanges()
             {
+                Console.Write("Saving..");
+
                 using (FileStream fs = new(AppPath.FileStat, FileMode.Create));
                 foreach (var stat in List.OrderByDescending((e) => e.Found))
                     if (stat.Found > 0)
                         stat.Record();
+
+                Console.WriteLine("\rSaved   ");
             }
 
             //-----------------------------------------------------------------

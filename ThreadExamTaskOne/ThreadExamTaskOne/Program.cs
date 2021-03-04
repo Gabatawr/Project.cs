@@ -10,19 +10,22 @@ namespace ThreadExamTaskOne
     partial class Program
     {
         static readonly object block = new();
-        static int tasksCount = 0;
 
         static void Search(object o)
         {
-            Interlocked.Increment(ref tasksCount);
             if (o is string s)
             {
-                foreach (var folder in Directory.GetDirectories(s))
+                DirectoryInfo dInfo = new(s);
+                if (dInfo.Attributes.HasFlag(FileAttributes.Hidden) is false &&
+                    dInfo.Attributes.HasFlag(FileAttributes.System) is false)
                 {
-                    Task.Factory.StartNew(Search, folder);
-                    Interlocked.Decrement(ref progressCur);
+                    foreach (var folder in Directory.GetDirectories(s))
+                    {
+                        Task.Factory.StartNew(Search, folder);
+                        Interlocked.Decrement(ref progressCur);
+                    }
                 }
-                
+
                 foreach (var file in Directory.GetFiles(s))
                 {
                     FileInfo fileInfo = new(file);
@@ -35,7 +38,7 @@ namespace ThreadExamTaskOne
                             string fileText = File.ReadAllText(file);
 
                             Dictionary<string, int> foundWords = new();
-                            
+
                             foreach (var word in Stat.WordsDic.Keys)
                             {
                                 var m = Regex.Matches(fileText, @"[\s,\b]" + word);
@@ -53,34 +56,63 @@ namespace ThreadExamTaskOne
                     }
                 }
                 Thread.Sleep(10); //fake lag
-                Interlocked.Decrement(ref tasksCount);
             }
         }
 
-        static int progressCur = 0;
+        static int progressCur = 0, progressMax = 0;
         static void CountMax(object o)
         {
             if (o is string s)
             {
-                foreach (var folder in Directory.GetDirectories(s))
+                DirectoryInfo dInfo = new(s);
+                if (dInfo.Attributes.HasFlag(FileAttributes.Hidden) is false &&
+                    dInfo.Attributes.HasFlag(FileAttributes.System) is false)
                 {
-                    Task.Factory.StartNew(CountMax, folder).Wait();
-                    Interlocked.Increment(ref progressCur);
+                    foreach (var folder in Directory.GetDirectories(s))
+                    {
+                        Task.Factory.StartNew(CountMax, folder).Wait();
+                        Interlocked.Increment(ref progressCur);
+                    }
                 }
             }
         }
 
-        static void Main(string[] args)
+        static void EnterPath()
         {
-            Task.Factory.StartNew(CountMax, AppPath.Search).Wait();
-            int progressMax = progressCur;
-
-            Task.Factory.StartNew(Search, AppPath.Search);
-
+            Console.Write("Enter path: ");
+            string s = Console.ReadLine();
+            if (string.IsNullOrEmpty(s) is false && Directory.Exists(s))
+            {
+                if (s[^1] == ':' || s[^1] != '\\')
+                    s += '\\';
+                AppPath.Search = s;
+            }
             Console.CursorVisible = false;
+        }
+
+        static void SearchStart()
+        {
+            void Print(string s)
+            {
+                Console.SetCursorPosition(0, 0);
+                Console.Write("".PadRight(12, ' '));
+                Console.Write('\r'+ s + ".." +'\r');
+            }
+
+            Print("Scan");
+            Task.Factory.StartNew(CountMax, AppPath.Search).Wait();
+            progressMax = progressCur;
+
+            Print("Search");
+            Task.Factory.StartNew(Search, AppPath.Search);
+        }
+
+        static void ProgressBar()
+        {
+            Console.WriteLine();
             {
                 Console.Write("[".PadRight(100, '_') + ']');
-                for (double p = 100; tasksCount != 0; p = (double)progressCur / progressMax * 100)
+                for (double p = 100; p >= 0; p = (double)progressCur / progressMax * 100)
                 {
                     Console.SetCursorPosition(0, Console.CursorTop);
                     Console.Write("[".PadRight(100 - (int)p, '#'));
@@ -90,11 +122,16 @@ namespace ThreadExamTaskOne
                 Console.WriteLine();
             }
             Console.CursorVisible = true;
+        }
 
-            Console.Write("Saving...");
+        static void Main(string[] args)
+        {
+            EnterPath();
+            SearchStart();
+
+            Task.Run(ProgressBar).Wait();
+
             Stat.SaveChanges();
-            Console.WriteLine("\rSaved    ");
-
             Stat.ShortPrint();
 
             Console.ReadKey();
