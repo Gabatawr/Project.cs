@@ -32,10 +32,11 @@ namespace ThreadExamTaskOne
                         if (fileInfo.Extension == ex)
                         {
                             lock (block) extensionDic[ex] += 1;
-                            
+
+                            string fileText = File.ReadAllText(file);
                             foreach (var word in wordDic.Keys)
                             {
-                                var m = Regex.Matches(File.ReadAllText(file), @"[\s,\b]" + word);
+                                var m = Regex.Matches(fileText, @"[\s,\b]" + word);
                                 lock (block) wordDic[word] += m.Count;
                             }
                             Console.WriteLine(file);
