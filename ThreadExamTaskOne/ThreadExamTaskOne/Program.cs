@@ -1,81 +1,98 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace ThreadExamTaskOne
 {
-    class Program
+    partial class Program
     {
         static readonly object block = new();
-        static int count = 0;
-        static string path = @"E:\Code";
-
-        static Dictionary<string, int> extensionDic, wordDic;
+        static int tasksCount = 0;
+        
 
         static void Search(object o)
         {
-            Interlocked.Increment(ref count);
+            Interlocked.Increment(ref tasksCount);
             if (o is string s)
             {
                 foreach (var folder in Directory.GetDirectories(s))
+                {
                     Task.Factory.StartNew(Search, folder);
+                    Interlocked.Decrement(ref progressCur);
+                }
                 
                 foreach (var file in Directory.GetFiles(s))
                 {
                     FileInfo fileInfo = new(file);
-                    foreach (var ex in extensionDic.Keys)
+                    foreach (var ex in Stat.ExtensionsDic.Keys)
                     {
                         if (fileInfo.Extension == ex)
                         {
-                            lock (block) extensionDic[ex] += 1;
+                            lock (block) Stat.ExtensionsDic[ex] += 1;
 
                             string fileText = File.ReadAllText(file);
-                            foreach (var word in wordDic.Keys)
+
+                            Dictionary<string, int> foundWords = new();
+                            
+                            foreach (var word in Stat.WordsDic.Keys)
                             {
                                 var m = Regex.Matches(fileText, @"[\s,\b]" + word);
-                                lock (block) wordDic[word] += m.Count;
+                                foundWords.Add(word, m.Count);
+                                lock (block) Stat.WordsDic[word] += m.Count;
                             }
-                            Console.WriteLine(file);
+
+                            Stat.List.Add(new Stat()
+                            {
+                                Path = file,
+                                Size = fileInfo.Length,
+                                FoundWords = foundWords
+                            });
                         }
                     }
                 }
+                Thread.Sleep(10); //fake lag
+                Interlocked.Decrement(ref tasksCount);
             }
-            Interlocked.Decrement(ref count);
+        }
+
+        static int progressCur = 0;
+        static void SearchCount(object o)
+        {
+            if (o is string s)
+            {
+                foreach (var folder in Directory.GetDirectories(s))
+                {
+                    Task.Factory.StartNew(SearchCount, folder).Wait();
+                    Interlocked.Increment(ref progressCur);
+                }
+            }
         }
 
         static void Main(string[] args)
         {
-            extensionDic = File.ReadAllText(Directory.GetCurrentDirectory() + '\\' + "extensions.txt")
-                .Split("\r\n")
-                .ToDictionary(w => w.Insert(0, "."), w => 0);
-            wordDic = File.ReadAllText(Directory.GetCurrentDirectory() + '\\' + "words.txt")
-                .Split("\r\n")
-                .ToDictionary(w => w, w => 0);
+            Task.Factory.StartNew(SearchCount, AppPath.Search).Wait();
+            int progressMax = progressCur;
 
-            Task.Factory.StartNew(Search, path);
+            Task.Factory.StartNew(Search, AppPath.Search);
 
-            while (true)
+            Console.CursorVisible = false;
             {
-                Thread.Sleep(100);
-                lock (block) {
-                    if (count == 0) break;
+                Console.Write("[".PadRight(100, '_') + ']');
+                for (double p = 100; tasksCount != 0; p = (double)progressCur / progressMax * 100)
+                {
+                    Console.SetCursorPosition(0, Console.CursorTop);
+                    Console.Write("[".PadRight(100 - (int)p, '#'));
+                    Console.Write("]" + Math.Round(100 - p) + '%');
                 }
-            }
-            Console.WriteLine();
-
-            void Print(Dictionary<string, int> dic)
-            {
                 Console.WriteLine();
-                foreach (var wd in dic)
-                    Console.WriteLine(wd.Key.PadRight(wordDic.Keys.Max(w => w.Length) + 1) + ':' + wd.Value);
             }
+            Console.CursorVisible = true;
 
-            Print(extensionDic);
-            Print(wordDic);
+            Stat.SaveChanges();
+            Stat.ShortPrint();
 
             Console.ReadKey();
         }
