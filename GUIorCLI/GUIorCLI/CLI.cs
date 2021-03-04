@@ -18,7 +18,7 @@ namespace GUIorCLI
 
             if (process.ProcessName == "cmd")
             {
-                Kernel32.AttachConsole(process.Id);
+                bool a = Kernel32.AttachConsole(process.Id);
                 attached = true;
             }
             else

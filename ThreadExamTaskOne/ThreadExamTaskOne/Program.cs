@@ -14,32 +14,28 @@ namespace ThreadExamTaskOne
         static int count = 0;
         static string path = @"E:\Code";
 
-        static Dictionary<string, int> extenDic;
-        static Dictionary<string, int> wordDic = new();
+        static Dictionary<string, int> extensionDic, wordDic;
 
         static void Search(object o)
         {
             Interlocked.Increment(ref count);
             if (o is string s)
             {
-                string[] folders = Directory.GetDirectories(s);
-                foreach (var folder in folders)
+                foreach (var folder in Directory.GetDirectories(s))
                     Task.Factory.StartNew(Search, folder);
                 
-                string[] files = Directory.GetFiles(s);
-                foreach (var file in files)
+                foreach (var file in Directory.GetFiles(s))
                 {
                     FileInfo fileInfo = new(file);
-                    foreach (var ex in extenDic.Keys)
+                    foreach (var ex in extensionDic.Keys)
                     {
                         if (fileInfo.Extension == ex)
                         {
-                            lock (block) extenDic[ex] += 1;
-
-                            string fireStr = File.ReadAllText(file);
+                            lock (block) extensionDic[ex] += 1;
+                            
                             foreach (var word in wordDic.Keys)
                             {
-                                MatchCollection m = Regex.Matches(fireStr, @"[\s,\b]" + word);
+                                var m = Regex.Matches(File.ReadAllText(file), @"[\s,\b]" + word);
                                 lock (block) wordDic[word] += m.Count;
                             }
                             Console.WriteLine(file);
@@ -52,9 +48,7 @@ namespace ThreadExamTaskOne
 
         static void Main(string[] args)
         {
-            Console.Write("Tasks: ");
-
-            extenDic = File.ReadAllText(Directory.GetCurrentDirectory() + '\\' + "extensions.txt")
+            extensionDic = File.ReadAllText(Directory.GetCurrentDirectory() + '\\' + "extensions.txt")
                 .Split("\r\n")
                 .ToDictionary(w => w.Insert(0, "."), w => 0);
             wordDic = File.ReadAllText(Directory.GetCurrentDirectory() + '\\' + "words.txt")
@@ -63,24 +57,13 @@ namespace ThreadExamTaskOne
 
             Task.Factory.StartNew(Search, path);
 
-            Thread.Sleep(100);
-            Console.CursorVisible = false;
             while (true)
             {
-                //lock (block) Console.Write(count);
-                //Console.SetCursorPosition(7, Console.CursorTop);
-
-                Task.WaitAny();
-                lock (block)
-                {
-                    if (count == 0)
-                    {
-                        //Console.Write(count);
-                        break;
-                    }
+                Thread.Sleep(100);
+                lock (block) {
+                    if (count == 0) break;
                 }
             }
-            Console.CursorVisible = true;
             Console.WriteLine();
 
             void Print(Dictionary<string, int> dic)
@@ -90,7 +73,7 @@ namespace ThreadExamTaskOne
                     Console.WriteLine(wd.Key.PadRight(wordDic.Keys.Max(w => w.Length) + 1) + ':' + wd.Value);
             }
 
-            Print(extenDic);
+            Print(extensionDic);
             Print(wordDic);
 
             Console.ReadKey();
