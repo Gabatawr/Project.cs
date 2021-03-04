@@ -11,7 +11,6 @@ namespace ThreadExamTaskOne
     {
         static readonly object block = new();
         static int tasksCount = 0;
-        
 
         static void Search(object o)
         {
