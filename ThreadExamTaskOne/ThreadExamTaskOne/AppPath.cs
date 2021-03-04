@@ -14,9 +14,9 @@ namespace ThreadExamTaskOne
             static AppPath()
             {
                 App = Directory.GetCurrentDirectory();
-                Search = @"E:\Code";
-                FileStat = App + '\\' + "stat.txt";
-                FileWords = App + '\\' + "words.txt";
+                Search         = @"E:\Code";
+                FileStat       = App + '\\' + "stat.txt";
+                FileWords      = App + '\\' + "words.txt";
                 FileExtensions = App + '\\' + "extensions.txt";
             }
         }

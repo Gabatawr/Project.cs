@@ -59,13 +59,13 @@ namespace ThreadExamTaskOne
         }
 
         static int progressCur = 0;
-        static void SearchCount(object o)
+        static void CountMax(object o)
         {
             if (o is string s)
             {
                 foreach (var folder in Directory.GetDirectories(s))
                 {
-                    Task.Factory.StartNew(SearchCount, folder).Wait();
+                    Task.Factory.StartNew(CountMax, folder).Wait();
                     Interlocked.Increment(ref progressCur);
                 }
             }
@@ -73,7 +73,7 @@ namespace ThreadExamTaskOne
 
         static void Main(string[] args)
         {
-            Task.Factory.StartNew(SearchCount, AppPath.Search).Wait();
+            Task.Factory.StartNew(CountMax, AppPath.Search).Wait();
             int progressMax = progressCur;
 
             Task.Factory.StartNew(Search, AppPath.Search);
@@ -86,12 +86,16 @@ namespace ThreadExamTaskOne
                     Console.SetCursorPosition(0, Console.CursorTop);
                     Console.Write("[".PadRight(100 - (int)p, '#'));
                     Console.Write("]" + Math.Round(100 - p) + '%');
+                    if (100 - p == 100) break;
                 }
                 Console.WriteLine();
             }
             Console.CursorVisible = true;
 
+            Console.Write("Saving...");
             Stat.SaveChanges();
+            Console.WriteLine("\rSaved    ");
+
             Stat.ShortPrint();
 
             Console.ReadKey();
