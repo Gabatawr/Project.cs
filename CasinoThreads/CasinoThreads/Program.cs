@@ -18,7 +18,7 @@ namespace CasinoThreads
             for (int i = 0; i < tablesCount; i++)
             {
                 while (tables[i].InGame);
-                Console.WriteLine("\nTable #" + i + " Players per day #" + tables[i].MaxPlayers);
+                Console.WriteLine("\nTable #" + i + " Players per day #" + tables[i].PlayersPerDay);
                 tables[i].Statistic.Print();
             }
             Console.ReadKey();
