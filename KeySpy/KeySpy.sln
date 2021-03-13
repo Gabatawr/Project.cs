@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31105.61
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeySpy_Server", "KeySpy_Server\KeySpy_Server.csproj", "{A6FE95B9-DC46-4153-833F-A6D54139DB61}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeySpy_Client", "KeySpy_Client\KeySpy_Client.csproj", "{74E7ECA7-D141-46D8-AF46-0EABEEBF83A0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A6FE95B9-DC46-4153-833F-A6D54139DB61}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A6FE95B9-DC46-4153-833F-A6D54139DB61}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A6FE95B9-DC46-4153-833F-A6D54139DB61}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A6FE95B9-DC46-4153-833F-A6D54139DB61}.Release|Any CPU.Build.0 = Release|Any CPU
+		{74E7ECA7-D141-46D8-AF46-0EABEEBF83A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{74E7ECA7-D141-46D8-AF46-0EABEEBF83A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{74E7ECA7-D141-46D8-AF46-0EABEEBF83A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{74E7ECA7-D141-46D8-AF46-0EABEEBF83A0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {83F3E2B6-CF6D-4A43-8E50-87BA95325636}
+	EndGlobalSection
+EndGlobal
